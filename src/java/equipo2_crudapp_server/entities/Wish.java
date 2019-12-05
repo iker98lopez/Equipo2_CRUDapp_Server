@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="wish",schema="equipo2crudappdb")
 public class Wish implements Serializable{
+    
     private static final long  serialVersionUID = 1L;
     
     /**

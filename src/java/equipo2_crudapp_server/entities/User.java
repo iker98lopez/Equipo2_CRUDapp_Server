@@ -6,7 +6,6 @@
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
