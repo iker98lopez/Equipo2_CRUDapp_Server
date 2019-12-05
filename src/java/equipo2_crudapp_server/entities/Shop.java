@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity for shop.
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "shop", schema = "equipo2crudappdb")
+@XmlRootElement
 public class Shop implements Serializable {
 
     private static final long serialVersionUID = 1L;

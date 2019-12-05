@@ -14,10 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity for Offer.
@@ -26,6 +28,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "offer", schema = "equipo2crudappdb")
+@XmlRootElement
 public class Offer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -89,6 +92,7 @@ public class Offer implements Serializable {
     /**
      * Set of comments of the offer.
      */
+    @OneToMany (mappedBy = "comment")
     private Set<Comment> comments;
 
     /**

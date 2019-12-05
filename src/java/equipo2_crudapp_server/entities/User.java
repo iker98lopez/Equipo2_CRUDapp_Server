@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * User entity
@@ -27,6 +28,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "user", schema = "equipo2crudappdb")
+@XmlRootElement
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
