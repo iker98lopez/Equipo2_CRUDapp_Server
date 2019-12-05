@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -54,6 +55,11 @@ public class Software implements Serializable {
      * Description of the software.
      */
     private String description;
+
+    /**
+     * Image of the software.
+     */
+    private Blob image;
 
     /**
      * Release date of the software
@@ -194,16 +200,22 @@ public class Software implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", image=" + image + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + ", offers=" + offers + ", parentSoftware=" + parentSoftware + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.softwareId);
-        hash = 83 * hash + Objects.hashCode(this.name);
-        hash = 83 * hash + Objects.hashCode(this.publisher);
-        hash = 83 * hash + Objects.hashCode(this.description);
-        hash = 83 * hash + Objects.hashCode(this.releaseDate);
-        hash = 83 * hash + Objects.hashCode(this.softwareType);
-        hash = 83 * hash + Objects.hashCode(this.offers);
-        hash = 83 * hash + Objects.hashCode(this.parentSoftware);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.softwareId);
+        hash = 29 * hash + Objects.hashCode(this.name);
+        hash = 29 * hash + Objects.hashCode(this.publisher);
+        hash = 29 * hash + Objects.hashCode(this.description);
+        hash = 29 * hash + Objects.hashCode(this.image);
+        hash = 29 * hash + Objects.hashCode(this.releaseDate);
+        hash = 29 * hash + Objects.hashCode(this.softwareType);
+        hash = 29 * hash + Objects.hashCode(this.offers);
+        hash = 29 * hash + Objects.hashCode(this.parentSoftware);
         return hash;
     }
 
@@ -231,6 +243,9 @@ public class Software implements Serializable {
         if (!Objects.equals(this.softwareId, other.softwareId)) {
             return false;
         }
+        if (!Objects.equals(this.image, other.image)) {
+            return false;
+        }
         if (!Objects.equals(this.releaseDate, other.releaseDate)) {
             return false;
         }
@@ -244,10 +259,5 @@ public class Software implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + ", offers=" + offers + ", parentSoftware=" + parentSoftware + '}';
     }
 }

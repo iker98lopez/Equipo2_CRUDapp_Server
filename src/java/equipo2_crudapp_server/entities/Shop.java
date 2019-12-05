@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,11 @@ public class Shop implements Serializable {
      */
     @NotNull
     private String url;
+
+    /**
+     * Image or logo of the shop.
+     */
+    private Blob image;
 
     /**
      * @return the shopId
@@ -88,15 +94,16 @@ public class Shop implements Serializable {
 
     @Override
     public String toString() {
-        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + '}';
+        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + ", image=" + image + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.shopId);
-        hash = 47 * hash + Objects.hashCode(this.name);
-        hash = 47 * hash + Objects.hashCode(this.url);
+        hash = 67 * hash + Objects.hashCode(this.shopId);
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.url);
+        hash = 67 * hash + Objects.hashCode(this.image);
         return hash;
     }
 
@@ -119,6 +126,9 @@ public class Shop implements Serializable {
             return false;
         }
         if (!Objects.equals(this.shopId, other.shopId)) {
+            return false;
+        }
+        if (!Objects.equals(this.image, other.image)) {
             return false;
         }
         return true;

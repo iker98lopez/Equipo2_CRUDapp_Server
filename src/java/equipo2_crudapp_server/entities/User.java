@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -21,12 +22,13 @@ import javax.validation.constraints.NotNull;
 
 /**
  * User entity
+ *
  * @author Diego Corral
  */
 @Entity
-@Table( name = "user", schema = "equipo2crudappdb")
-public class User implements Serializable{
-    
+@Table(name = "user", schema = "equipo2crudappdb")
+public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -35,57 +37,62 @@ public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
-    
+
     /**
      * The login of the user
      */
     @NotNull
     private String login;
-    
+
     /**
      * The password of the user account
      */
     @NotNull
     private String password;
-    
+
     /**
      * The full name of the user
      */
     @NotNull
     private String fullName;
-    
+
     /**
      * The email of the user
      */
     @NotNull
     private String email;
-    
+
+    /**
+     * Profile image of the user
+     */
+    private Blob image;
+
     /**
      * The date of the las password change
      */
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastPasswordChange;
-    
+
     /**
      * The last time the user logged in
      */
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLogin;
-    
+
     /**
      * The privilege of the user. It can be USER or ADMIN
      */
     @NotNull
     private UserPrivilege privilege;
-    
+
     /**
      * The user status. It can be ENABLED or DISABLED
      */
     @NotNull
     private UserStatus status;
-    
+
     /**
      * A list with all the software wishes of the user
      */
@@ -93,18 +100,24 @@ public class User implements Serializable{
     private Set<Wish> wishList;
 
     @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", image=" + image + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", wishList=" + wishList + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.userId);
-        hash = 29 * hash + Objects.hashCode(this.login);
-        hash = 29 * hash + Objects.hashCode(this.password);
-        hash = 29 * hash + Objects.hashCode(this.fullName);
-        hash = 29 * hash + Objects.hashCode(this.email);
-        hash = 29 * hash + Objects.hashCode(this.lastPasswordChange);
-        hash = 29 * hash + Objects.hashCode(this.lastLogin);
-        hash = 29 * hash + Objects.hashCode(this.privilege);
-        hash = 29 * hash + Objects.hashCode(this.status);
-        hash = 29 * hash + Objects.hashCode(this.wishList);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.userId);
+        hash = 59 * hash + Objects.hashCode(this.login);
+        hash = 59 * hash + Objects.hashCode(this.password);
+        hash = 59 * hash + Objects.hashCode(this.fullName);
+        hash = 59 * hash + Objects.hashCode(this.email);
+        hash = 59 * hash + Objects.hashCode(this.image);
+        hash = 59 * hash + Objects.hashCode(this.lastPasswordChange);
+        hash = 59 * hash + Objects.hashCode(this.lastLogin);
+        hash = 59 * hash + Objects.hashCode(this.privilege);
+        hash = 59 * hash + Objects.hashCode(this.status);
+        hash = 59 * hash + Objects.hashCode(this.wishList);
         return hash;
     }
 
@@ -135,6 +148,9 @@ public class User implements Serializable{
         if (!Objects.equals(this.userId, other.userId)) {
             return false;
         }
+        if (!Objects.equals(this.image, other.image)) {
+            return false;
+        }
         if (!Objects.equals(this.lastPasswordChange, other.lastPasswordChange)) {
             return false;
         }
@@ -152,12 +168,4 @@ public class User implements Serializable{
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", wishList=" + wishList + '}';
-    }
-
-    
-    
 }
