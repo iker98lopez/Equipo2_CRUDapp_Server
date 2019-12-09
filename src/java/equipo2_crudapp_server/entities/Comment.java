@@ -8,8 +8,10 @@ package equipo2_crudapp_server.entities;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Comment entity
@@ -17,6 +19,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table( name = "comment", schema = "equipo2crudappdb")
+@XmlRootElement
 public class Comment {
     
     private static final long serialVersionUID = 1L;
@@ -37,6 +40,7 @@ public class Comment {
      * The user that has created the comment
      */
     @NotNull
+    @ManyToOne ()
     private User user;
 
     /**

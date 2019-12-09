@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author Adrián García
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="wish",schema="equipo2crudappdb")
+@XmlRootElement
 public class Wish implements Serializable{
     
     private static final long  serialVersionUID = 1L;
