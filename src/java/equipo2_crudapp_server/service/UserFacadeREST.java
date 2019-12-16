@@ -6,10 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.User;
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -24,68 +21,56 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Diego Corral
  */
-@Stateless
-@Path("equipo2_crudapp_server.entities.user")
-public class UserFacadeREST extends AbstractFacade<User> {
+@Path("user")
+public class UserFacadeREST {
 
-    @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
-    private EntityManager em;
+    /**
+     * Enterprise Java Beans for the entity User
+     */
+    @EJB
+    private EJBUserInterface ejbUser;
 
-    public UserFacadeREST() {
-        super(User.class);
-    }
-
+    /**
+     * Method that creates a new user in the database
+     * @param user 
+     */
     @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(User entity) {
-        super.create(entity);
+    @Consumes({MediaType.APPLICATION_XML})
+    public void createUser(User user) {
+        ejbUser.createUser(user);
     }
 
+    /**
+     * Method that modifies an specified user in the database
+     * @param userId Id of the user
+     * @param user User that is going to be modified and its new values
+     */
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, User entity) {
-        super.edit(entity);
+    @Consumes({MediaType.APPLICATION_XML})
+    public void modifyUser(@PathParam("id") Integer userId, User user) {
+        ejbUser.modifyUser(user);
     }
 
+    /**
+     * Method that deletes a user from the database
+     * @param userId Id of the user that is going to be deleted
+     */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void deleteUser(@PathParam("id") Integer userId) {
+        ejbUser.deleteUser(userId);
     }
 
+    /**
+     * Method that search for a user
+     * @param userId Id of the user to find
+     * @return The user found
+     */
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public User find(@PathParam("id") Integer id) {
-        return super.find(id);
+    @Produces({MediaType.APPLICATION_XML})
+    public User find(@PathParam("id") Integer userId) {
+        return ejbUser.findUser(userId);
     }
-
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<User> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<User> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
 }

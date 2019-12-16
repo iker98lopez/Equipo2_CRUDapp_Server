@@ -6,10 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -24,68 +21,56 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Diego Corral
  */
-@Stateless
-@Path("equipo2_crudapp_server.entities.shop")
-public class ShopFacadeREST extends AbstractFacade<Shop> {
+@Path("shop")
+public class ShopFacadeREST {
+    
+    /**
+     * Enterprise Java Beans for the entity User
+     */
+    @EJB
+    private EJBShopInterface ejbShop;
 
-    @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
-    private EntityManager em;
-
-    public ShopFacadeREST() {
-        super(Shop.class);
-    }
-
+    /**
+     * Method that inserts a shop in the database
+     * @param shop The shop that is going to be inserted
+     */
     @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Shop entity) {
-        super.create(entity);
+    @Consumes({MediaType.APPLICATION_XML})
+    public void createShop(Shop shop) {
+        ejbShop.createShop(shop);
     }
 
+    /**
+     * Method that modifies a shop in the database
+     * @param shopId Id of the shop
+     * @param shop The shop that is going to be modified and its new values
+     */
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Shop entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Shop find(@PathParam("id") Integer id) {
-        return super.find(id);
-    }
-
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Shop> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Shop> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    @Consumes({MediaType.APPLICATION_XML})
+    public void modifyShop(@PathParam("id") Integer shopId, Shop shop) {
+        ejbShop.modifyShop(shop);
     }
     
+    /**
+     * Method that deletes a shop from the database
+     * @param shopId Id of the shop to delete
+     */
+    @DELETE
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer shopId) {
+        ejbShop.deleteShop(shopId);
+    }
+
+    /**
+     * Method that finds a shop 
+     * @param shopId Id of the shop to search
+     * @return The found shop
+     */
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML})
+    public Shop find(@PathParam("id") Integer shopId) {
+        return ejbShop.findShop(shopId);
+    }
 }
