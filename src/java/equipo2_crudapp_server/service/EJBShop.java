@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EJBShop implements EJBShopInterface{
 
-    @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
+    @PersistenceContext(unitName = " ")
     private EntityManager entityManager;
 
     /**

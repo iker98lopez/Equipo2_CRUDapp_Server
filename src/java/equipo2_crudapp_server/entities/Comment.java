@@ -40,7 +40,7 @@ public class Comment {
      * The user that has created the comment
      */
     @NotNull
-    @ManyToOne ()
+    @ManyToOne
     private User user;
 
     /**

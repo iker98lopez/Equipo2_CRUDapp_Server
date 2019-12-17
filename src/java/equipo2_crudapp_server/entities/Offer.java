@@ -93,7 +93,7 @@ public class Offer implements Serializable {
     /**
      * Set of comments of the offer.
      */
-    @OneToMany (mappedBy = "comment")
+    @OneToMany (mappedBy = "commentId")
     private Set<Comment> comments;
 
     /**
