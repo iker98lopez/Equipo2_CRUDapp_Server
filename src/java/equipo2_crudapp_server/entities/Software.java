@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
@@ -15,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,6 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "software", schema = "equipo2crudappdb")
+@NamedQueries({
+    @NamedQuery(name = "findAllSoftwares",
+            query = "SELECT a FROM Software a ORDER BY a.id DESC")
+    ,
+    @NamedQuery(name = "findSoftwaresByName",
+            query = "SELECT a FROM Software a WHERE a.name LIKE CONCAT('%', :name, '%')")
+})
 @XmlRootElement
 public class Software implements Serializable {
 
