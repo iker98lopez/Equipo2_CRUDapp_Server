@@ -11,18 +11,19 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Adrián García
  */
 
 @Entity
-@Table(name="wish",schema="equipo2crudappdb")
+@Table(name = "wish", schema = "equipo2crudappdb")
 @XmlRootElement
-public class Wish implements Serializable{
-    
-    private static final long  serialVersionUID = 1L;
-    
+public class Wish implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * The id of wish
      */
@@ -36,21 +37,23 @@ public class Wish implements Serializable{
      * Minimum price to be notified when software drops its price
      */
     private Double minPrice;
-    
+
     /**
-     * 
+     *
      * @return the wish id
      */
     public Integer getId() {
         return id;
     }
+
     /**
-     * 
-     * @param id 
+     *
+     * @param id
      */
     public void setId(Integer id) {
         this.id = id;
     }
+
     /**
      * @return the software
      */
@@ -78,7 +81,7 @@ public class Wish implements Serializable{
     public void setMinPrice(Double minPrice) {
         this.minPrice = minPrice;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -105,7 +108,4 @@ public class Wish implements Serializable{
     public String toString() {
         return "Wish{" + "id=" + id + ", software=" + software + ", minPrice=" + minPrice + '}';
     }
-    
-    
-    
 }

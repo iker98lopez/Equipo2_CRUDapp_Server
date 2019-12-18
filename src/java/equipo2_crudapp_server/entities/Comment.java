@@ -5,6 +5,7 @@
  */
 package equipo2_crudapp_server.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,30 +13,32 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Comment entity
+ *
  * @author Diego Corral
  */
 @Entity
-@Table( name = "comment", schema = "equipo2crudappdb")
+@Table(name = "comment", schema = "equipo2crudappdb")
 @XmlRootElement
-public class Comment {
-    
+public class Comment implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * The comment id
      */
     @Id
     private Integer commentId;
-    
+
     /**
      * The text of the comment
      */
     @NotNull
     private String comment;
-    
+
     /**
      * The user that has created the comment
      */
@@ -74,6 +77,7 @@ public class Comment {
     /**
      * @return the user
      */
+    @XmlTransient
     public User getUser() {
         return user;
     }
@@ -122,9 +126,4 @@ public class Comment {
     public String toString() {
         return "Comment{" + "commentId=" + commentId + ", comment=" + comment + ", user=" + user + '}';
     }
-
-    
-    
-    
-    
 }

@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
  * @author Diego Corral
  */
 @Path("user")
-public class UserFacadeREST {
+public class UserREST {
 
     /**
      * Enterprise Java Beans for the entity User

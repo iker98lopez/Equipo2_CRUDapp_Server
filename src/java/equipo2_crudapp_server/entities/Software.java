@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -179,7 +180,6 @@ public class Software implements Serializable {
     /**
      * @return the offers
      */
-    @XmlTransient
     public List<Offer> getOffers() {
         return offers;
     }

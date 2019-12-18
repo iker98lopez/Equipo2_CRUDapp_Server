@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
  * @author Adrián García
  */
 @Path("wish")
-public class WishFacadeREST {
+public class WishREST {
     
     /**
      * Enterprise Java Beans for the entity wish

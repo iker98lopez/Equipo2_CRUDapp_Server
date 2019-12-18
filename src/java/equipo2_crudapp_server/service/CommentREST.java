@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
  * @author Adrián García
  */
 @Path("Comment")
-public class CommentFacadeREST {
+public class CommentREST {
     
     /**
      * Enterprise Java Beans for the entity comment

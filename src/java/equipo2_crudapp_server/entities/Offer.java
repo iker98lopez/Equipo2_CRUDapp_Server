@@ -93,7 +93,7 @@ public class Offer implements Serializable {
     /**
      * Set of comments of the offer.
      */
-    @OneToMany (mappedBy = "commentId")
+    @OneToMany(mappedBy = "commentId")
     private Set<Comment> comments;
 
     /**
@@ -183,6 +183,7 @@ public class Offer implements Serializable {
     /**
      * @return the user
      */
+    @XmlTransient
     public User getUser() {
         return user;
     }
@@ -197,6 +198,7 @@ public class Offer implements Serializable {
     /**
      * @return the software
      */
+    @XmlTransient
     public Software getSoftware() {
         return software;
     }
@@ -225,7 +227,6 @@ public class Offer implements Serializable {
     /**
      * @return the comments
      */
-    @XmlTransient
     public Set<Comment> getComments() {
         return comments;
     }
