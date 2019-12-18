@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -57,5 +58,14 @@ public class EJBShop implements EJBShopInterface{
     public Shop findShop(Integer id) {
         return entityManager.find(Shop.class, id);
     }
-    
+
+    /**
+     * This function finds all shops in the database and returns them.
+     *
+     * @return List of type Shop with all the shops in the database.
+     */
+    @Override
+    public List<Shop> findAllShops() {
+        return entityManager.createNamedQuery("findAllShops").getResultList();
+    }
 }

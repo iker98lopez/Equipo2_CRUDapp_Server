@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Wish;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -58,7 +59,7 @@ public class WishREST {
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer wishId) {
+    public void removeWish(@PathParam("id") Integer wishId) {
         ejbWish.deleteWish(wishId);
     }
 
@@ -70,7 +71,18 @@ public class WishREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Wish find(@PathParam("id") Integer wishId) {
+    public Wish findWish(@PathParam("id") Integer wishId) {
         return ejbWish.findWish(wishId);
+    }
+        
+    /**
+     * Finds and returns a list containing all the wishes from the database.
+     *
+     * @return List of type Wish with all the wishes found.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public List<Wish> findAllWishes() {
+        return ejbWish.findAllWishes();
     }
 }

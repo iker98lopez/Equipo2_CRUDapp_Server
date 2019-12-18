@@ -47,7 +47,7 @@ public class SoftwareREST {
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void edit(@PathParam("id") Integer id, Software software) {
+    public void editSoftware(@PathParam("id") Integer id, Software software) {
         ejbSoftware.modifySoftware(software);
     }
 
@@ -58,7 +58,7 @@ public class SoftwareREST {
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    public void removeSoftware(@PathParam("id") Integer id) {
         ejbSoftware.deleteSoftware(id);
     }
 
@@ -71,7 +71,7 @@ public class SoftwareREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Software find(@PathParam("id") Integer id) {
+    public Software findSoftware(@PathParam("id") Integer id) {
         return ejbSoftware.findSoftware(id);
     }
 
@@ -82,7 +82,7 @@ public class SoftwareREST {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<Software> findAll() {
+    public List<Software> findAllSoftwares() {
         return ejbSoftware.findAllSoftwares();
     }
 
@@ -95,7 +95,7 @@ public class SoftwareREST {
     @GET
     @Path("findByName/{name}")
     @Produces({MediaType.APPLICATION_XML})
-    public List<Software> findByName(@PathParam("name") String name) {
+    public List<Software> findSoftwaresByName(@PathParam("name") String name) {
         return ejbSoftware.findSoftwaresByName(name);
     }
 }

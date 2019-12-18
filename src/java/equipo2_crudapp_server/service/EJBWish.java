@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Wish;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -62,5 +63,15 @@ public class EJBWish implements EJBWishInterface {
     @Override
     public Wish findWish(Integer id) {
         return entityManager.find(Wish.class, id);
+    }
+    
+    /**
+     * This function finds all wishes in the database and returns them.
+     *
+     * @return List of type Wish with all the wishes in the database.
+     */
+    @Override
+    public List<Wish> findAllWishes() {
+        return entityManager.createNamedQuery("findAllWishes").getResultList();
     }
 }

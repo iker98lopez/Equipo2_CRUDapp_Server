@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -39,4 +40,11 @@ public interface EJBShopInterface {
      * @return The shop found
      */
     public Shop findShop(Integer shopId);
+
+    /**
+     * Finds and returns a list containing all the shops from the database.
+     *
+     * @return List of type Shop with all the shops found.
+     */
+    public List<Shop> findAllShops();
 }

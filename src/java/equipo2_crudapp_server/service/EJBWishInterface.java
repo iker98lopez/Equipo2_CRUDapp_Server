@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Wish;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -44,4 +45,11 @@ public interface EJBWishInterface {
      * @return Wish, if found.
      */
     public Wish findWish(Integer id);
+
+    /**
+     * Finds and returns a list containing all the wishes from the database.
+     *
+     * @return List of type Wish with all the wishes found.
+     */
+    public List<Wish> findAllWishes();
 }

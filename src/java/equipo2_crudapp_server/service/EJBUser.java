@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.User;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -55,6 +56,16 @@ public class EJBUser implements EJBUserInterface{
     @Override
     public User findUser(Integer userId) {
         return entityManager.find(User.class, userId);
+    }
+
+    /**
+     * This function finds all users in the database and returns them.
+     *
+     * @return List of type User with all the users in the database.
+     */
+    @Override
+    public List<User> findAllUsers() {
+        return entityManager.createNamedQuery("findAllUsers").getResultList();
     }
     
 }

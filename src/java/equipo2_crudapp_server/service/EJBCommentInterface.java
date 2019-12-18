@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -43,4 +44,11 @@ public interface EJBCommentInterface {
      * @return Comment, if found.
      */
     public Comment findComment(Integer id);
+
+    /**
+     * This function finds all comments in the database and returns them.
+     *
+     * @return List of type Comment with all the comments in the database.
+     */
+    public List<Comment> findAllComments();
 }

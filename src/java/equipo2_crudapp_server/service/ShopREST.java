@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -58,7 +59,7 @@ public class ShopREST {
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer shopId) {
+    public void removeShop(@PathParam("id") Integer shopId) {
         ejbShop.deleteShop(shopId);
     }
 
@@ -70,7 +71,18 @@ public class ShopREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Shop find(@PathParam("id") Integer shopId) {
+    public Shop findShop(@PathParam("id") Integer shopId) {
         return ejbShop.findShop(shopId);
+    }
+    
+    /**
+     * Finds and returns a list containing all the shops from the database.
+     *
+     * @return List of type Shop with all the shops found.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public List<Shop> findAllShops() {
+        return ejbShop.findAllShops();
     }
 }

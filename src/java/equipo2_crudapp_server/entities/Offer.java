@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,6 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "offer", schema = "equipo2crudappdb")
+@NamedQuery(name = "findAllOffers",
+            query = "SELECT a FROM Offer a ORDER BY a.id DESC")
 @XmlRootElement
 public class Offer implements Serializable {
 
@@ -93,7 +96,7 @@ public class Offer implements Serializable {
     /**
      * Set of comments of the offer.
      */
-    @OneToMany(mappedBy = "commentId")
+    @OneToMany
     private Set<Comment> comments;
 
     /**

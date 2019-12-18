@@ -8,50 +8,62 @@ package equipo2_crudapp_server.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Adrián García
  */
-
 @Entity
 @Table(name = "wish", schema = "equipo2crudappdb")
+@NamedQuery(name = "findAllWishes",
+            query = "SELECT a FROM Wish a ORDER BY a.id DESC")
 @XmlRootElement
 public class Wish implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * The id of wish
+     * The wishId of wish
      */
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer wishId;
+
     /**
      * The software in the wish
      */
+    @NotNull
+    @ManyToOne
     private Software software;
-    /**
-     * Minimum price to be notified when software drops its price
-     */
-    private Double minPrice;
 
     /**
-     *
-     * @return the wish id
+     * User owner of the wish
      */
-    public Integer getId() {
-        return id;
+    @NotNull
+    @ManyToOne
+    private User user;
+
+    /**
+     * @return the wishId
+     */
+    public Integer getWishId() {
+        return wishId;
     }
 
     /**
-     *
-     * @param id
+     * @param wishId the wishId to set
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setWishId(Integer wishId) {
+        this.wishId = wishId;
     }
 
     /**
@@ -69,23 +81,26 @@ public class Wish implements Serializable {
     }
 
     /**
-     * @return the minPrice
+     * @return the user
      */
-    public Double getMinPrice() {
-        return minPrice;
+    @XmlTransient
+    public User getUser() {
+        return user;
     }
 
     /**
-     * @param minPrice the minPrice to set
+     * @param user the user to set
      */
-    public void setMinPrice(Double minPrice) {
-        this.minPrice = minPrice;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.wishId);
+        hash = 67 * hash + Objects.hashCode(this.software);
+        hash = 67 * hash + Objects.hashCode(this.user);
         return hash;
     }
 
@@ -101,11 +116,20 @@ public class Wish implements Serializable {
             return false;
         }
         final Wish other = (Wish) obj;
+        if (!Objects.equals(this.wishId, other.wishId)) {
+            return false;
+        }
+        if (!Objects.equals(this.software, other.software)) {
+            return false;
+        }
+        if (!Objects.equals(this.user, other.user)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Wish{" + "id=" + id + ", software=" + software + ", minPrice=" + minPrice + '}';
+        return "Wish{" + "wishId=" + wishId + ", software=" + software + ", user=" + user + '}';
     }
 }

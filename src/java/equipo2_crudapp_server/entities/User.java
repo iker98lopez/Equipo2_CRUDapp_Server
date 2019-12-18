@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,6 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "user", schema = "equipo2crudappdb")
+@NamedQuery(name = "findAllUsers",
+            query = "SELECT a FROM User a ORDER BY a.id DESC")
 @XmlRootElement
 public class User implements Serializable {
 
@@ -100,12 +103,161 @@ public class User implements Serializable {
      */
     @OneToMany
     private Set<Wish> wishList;
-
-    @Override
-    public String toString() {
-        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", image=" + image + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", wishList=" + wishList + '}';
+    
+    /**
+     * @return the userId
+     */
+    public Integer getUserId() {
+        return userId;
     }
 
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * @return the login
+     */
+    public String getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the fullName
+     */
+    public String getFullName() {
+        return fullName;
+    }
+
+    /**
+     * @param fullName the fullName to set
+     */
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the image
+     */
+    public Blob getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(Blob image) {
+        this.image = image;
+    }
+
+    /**
+     * @return the lastPasswordChange
+     */
+    public Date getLastPasswordChange() {
+        return lastPasswordChange;
+    }
+
+    /**
+     * @param lastPasswordChange the lastPasswordChange to set
+     */
+    public void setLastPasswordChange(Date lastPasswordChange) {
+        this.lastPasswordChange = lastPasswordChange;
+    }
+
+    /**
+     * @return the lastLogin
+     */
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    /**
+     * @param lastLogin the lastLogin to set
+     */
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    /**
+     * @return the privilege
+     */
+    public UserPrivilege getPrivilege() {
+        return privilege;
+    }
+
+    /**
+     * @param privilege the privilege to set
+     */
+    public void setPrivilege(UserPrivilege privilege) {
+        this.privilege = privilege;
+    }
+
+    /**
+     * @return the status
+     */
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the wishList
+     */
+    public Set<Wish> getWishList() {
+        return wishList;
+    }
+
+    /**
+     * @param wishList the wishList to set
+     */
+    public void setWishList(Set<Wish> wishList) {
+        this.wishList = wishList;
+    }   
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -169,5 +321,10 @@ public class User implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", image=" + image + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", wishList=" + wishList + '}';
     }
 }

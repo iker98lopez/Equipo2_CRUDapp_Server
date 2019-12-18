@@ -8,8 +8,11 @@ package equipo2_crudapp_server.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,6 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "comment", schema = "equipo2crudappdb")
+@NamedQuery(name = "findAllComments",
+            query = "SELECT a FROM Comment a ORDER BY a.id DESC")
 @XmlRootElement
 public class Comment implements Serializable {
 
@@ -31,6 +36,7 @@ public class Comment implements Serializable {
      * The comment id
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer commentId;
 
     /**

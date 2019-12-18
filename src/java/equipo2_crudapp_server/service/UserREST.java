@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.User;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -70,7 +71,18 @@ public class UserREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public User find(@PathParam("id") Integer userId) {
+    public User findUser(@PathParam("id") Integer userId) {
         return ejbUser.findUser(userId);
+    }
+    
+    /**
+     * Finds and returns a list containing all the users from the database.
+     *
+     * @return List of type User with all the users found.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public List<User> findAllUsers() {
+        return ejbUser.findAllUsers();
     }
 }

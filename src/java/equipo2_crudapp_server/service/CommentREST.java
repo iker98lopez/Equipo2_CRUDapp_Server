@@ -6,7 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
-import equipo2_crudapp_server.entities.Wish;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -59,7 +59,7 @@ public class CommentREST {
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer commentId) {
+    public void removeComment(@PathParam("id") Integer commentId) {
         ejbComment.deleteComment(commentId);
     }
 
@@ -71,7 +71,18 @@ public class CommentREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Comment find(@PathParam("id") Integer commentId) {
+    public Comment findComment(@PathParam("id") Integer commentId) {
         return ejbComment.findComment(commentId);
+    }
+    
+    /**
+     * Finds and returns a list containing all the comments from the database.
+     *
+     * @return List of type Comment with all the comments found.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public List<Comment> findAllComments() {
+        return ejbComment.findAllComments();
     }
 }

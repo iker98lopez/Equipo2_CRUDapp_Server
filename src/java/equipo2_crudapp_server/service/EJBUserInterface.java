@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.User;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -39,4 +40,11 @@ public interface EJBUserInterface {
      * @return The user found
      */
     public User findUser(Integer userId);
+
+    /**
+     * Finds and returns a list containing all the users from the database.
+     *
+     * @return List of type User with all the users found.
+     */
+    public List<User> findAllUsers();
 }
