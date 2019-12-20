@@ -47,4 +47,7 @@ public interface EJBUserInterface {
      * @return List of type User with all the users found.
      */
     public List<User> findAllUsers();
+    
+    
+    public User checkUserPassword(String login, String password);
 }

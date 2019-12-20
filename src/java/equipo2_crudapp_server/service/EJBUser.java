@@ -66,6 +66,10 @@ public class EJBUser implements EJBUserInterface{
     @Override
     public List<User> findAllUsers() {
         return entityManager.createNamedQuery("findAllUsers").getResultList();
-    }
+    }  
     
+    @Override
+    public User checkUserPassword(String login, String password) {
+        return (User) entityManager.createNamedQuery("checkUserPassword").setParameter("login", login).setParameter("password", password).getSingleResult();
+    }
 }

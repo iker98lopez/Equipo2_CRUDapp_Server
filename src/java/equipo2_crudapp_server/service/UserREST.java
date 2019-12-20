@@ -33,7 +33,8 @@ public class UserREST {
 
     /**
      * Method that creates a new user in the database
-     * @param user 
+     *
+     * @param user
      */
     @POST
     @Consumes({MediaType.APPLICATION_XML})
@@ -43,6 +44,7 @@ public class UserREST {
 
     /**
      * Method that modifies an specified user in the database
+     *
      * @param userId Id of the user
      * @param user User that is going to be modified and its new values
      */
@@ -55,6 +57,7 @@ public class UserREST {
 
     /**
      * Method that deletes a user from the database
+     *
      * @param userId Id of the user that is going to be deleted
      */
     @DELETE
@@ -65,6 +68,7 @@ public class UserREST {
 
     /**
      * Method that search for a user
+     *
      * @param userId Id of the user to find
      * @return The user found
      */
@@ -74,7 +78,14 @@ public class UserREST {
     public User findUser(@PathParam("id") Integer userId) {
         return ejbUser.findUser(userId);
     }
-    
+
+    @GET
+    @Path("{login}/{password}")
+    @Produces({MediaType.APPLICATION_XML})
+    public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
+        return ejbUser.checkUserPassword(login, password);
+    }
+
     /**
      * Finds and returns a list containing all the users from the database.
      *

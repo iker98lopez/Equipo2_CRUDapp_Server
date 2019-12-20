@@ -11,9 +11,11 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,8 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "user", schema = "equipo2crudappdb")
-@NamedQuery(name = "findAllUsers",
+@NamedQueries({
+    @NamedQuery(name = "findAllUsers",
             query = "SELECT a FROM User a ORDER BY a.id DESC")
+    ,
+        @NamedQuery(name = "checkUserPassword",
+            query = "SELECT a FROM User a WHERE a.login = :login AND a.password = :password")
+})
 @XmlRootElement
 public class User implements Serializable {
 
@@ -68,11 +75,6 @@ public class User implements Serializable {
     private String email;
 
     /**
-     * Profile image of the user
-     */
-    private Blob image;
-
-    /**
      * The date of the las password change
      */
     @NotNull
@@ -101,9 +103,9 @@ public class User implements Serializable {
     /**
      * A list with all the software wishes of the user
      */
-    @OneToMany
+    @OneToMany (mappedBy = "user", fetch = EAGER)
     private Set<Wish> wishList;
-    
+
     /**
      * @return the userId
      */
@@ -175,20 +177,6 @@ public class User implements Serializable {
     }
 
     /**
-     * @return the image
-     */
-    public Blob getImage() {
-        return image;
-    }
-
-    /**
-     * @param image the image to set
-     */
-    public void setImage(Blob image) {
-        this.image = image;
-    }
-
-    /**
      * @return the lastPasswordChange
      */
     public Date getLastPasswordChange() {
@@ -256,8 +244,8 @@ public class User implements Serializable {
      */
     public void setWishList(Set<Wish> wishList) {
         this.wishList = wishList;
-    }   
-    
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -266,7 +254,6 @@ public class User implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.password);
         hash = 59 * hash + Objects.hashCode(this.fullName);
         hash = 59 * hash + Objects.hashCode(this.email);
-        hash = 59 * hash + Objects.hashCode(this.image);
         hash = 59 * hash + Objects.hashCode(this.lastPasswordChange);
         hash = 59 * hash + Objects.hashCode(this.lastLogin);
         hash = 59 * hash + Objects.hashCode(this.privilege);
@@ -302,9 +289,6 @@ public class User implements Serializable {
         if (!Objects.equals(this.userId, other.userId)) {
             return false;
         }
-        if (!Objects.equals(this.image, other.image)) {
-            return false;
-        }
         if (!Objects.equals(this.lastPasswordChange, other.lastPasswordChange)) {
             return false;
         }
@@ -322,9 +306,9 @@ public class User implements Serializable {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", image=" + image + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", wishList=" + wishList + '}';
+        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", wishList=" + wishList + '}';
     }
 }
