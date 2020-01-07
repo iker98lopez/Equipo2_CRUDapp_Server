@@ -8,13 +8,17 @@ package equipo2_crudapp_server.entities;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Basic;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -101,11 +105,25 @@ public class User implements Serializable {
     private UserStatus status;
 
     /**
-     * A list with all the software wishes of the user
+     * Profile image of the user
      */
-    @OneToMany (mappedBy = "user", fetch = EAGER)
+    @Lob
+    @Basic(fetch=EAGER)
+    private byte[] image;
+
+    /**
+     * A list with all the software wishes of the user
+    @OneToMany(mappedBy = "user", fetch = EAGER, cascade=ALL)
+    private Set<Wish> wishList;   */
+    @OneToMany(mappedBy = "user", fetch = EAGER, cascade=ALL)
     private Set<Wish> wishList;
 
+    @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
+    private List<Comment> comments;
+    
+    @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
+    private List<Offer> offers;
+    
     /**
      * @return the userId
      */
@@ -233,6 +251,20 @@ public class User implements Serializable {
     }
 
     /**
+     * @return the image
+     */
+    public byte[] getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    /**
      * @return the wishList
      */
     public Set<Wish> getWishList() {
@@ -246,19 +278,38 @@ public class User implements Serializable {
         this.wishList = wishList;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.userId);
-        hash = 59 * hash + Objects.hashCode(this.login);
-        hash = 59 * hash + Objects.hashCode(this.password);
-        hash = 59 * hash + Objects.hashCode(this.fullName);
-        hash = 59 * hash + Objects.hashCode(this.email);
-        hash = 59 * hash + Objects.hashCode(this.lastPasswordChange);
-        hash = 59 * hash + Objects.hashCode(this.lastLogin);
-        hash = 59 * hash + Objects.hashCode(this.privilege);
-        hash = 59 * hash + Objects.hashCode(this.status);
-        hash = 59 * hash + Objects.hashCode(this.wishList);
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.userId);
+        hash = 17 * hash + Objects.hashCode(this.login);
+        hash = 17 * hash + Objects.hashCode(this.password);
+        hash = 17 * hash + Objects.hashCode(this.fullName);
+        hash = 17 * hash + Objects.hashCode(this.email);
+        hash = 17 * hash + Objects.hashCode(this.lastPasswordChange);
+        hash = 17 * hash + Objects.hashCode(this.lastLogin);
+        hash = 17 * hash + Objects.hashCode(this.privilege);
+        hash = 17 * hash + Objects.hashCode(this.status);
+        hash = 17 * hash + Objects.hashCode(this.image);
+        hash = 17 * hash + Objects.hashCode(this.wishList);
+        hash = 17 * hash + Objects.hashCode(this.comments);
+        hash = 17 * hash + Objects.hashCode(this.offers);
         return hash;
     }
 
@@ -301,7 +352,16 @@ public class User implements Serializable {
         if (this.status != other.status) {
             return false;
         }
+        if (!Objects.equals(this.image, other.image)) {
+            return false;
+        }
         if (!Objects.equals(this.wishList, other.wishList)) {
+            return false;
+        }
+        if (!Objects.equals(this.comments, other.comments)) {
+            return false;
+        }
+        if (!Objects.equals(this.offers, other.offers)) {
             return false;
         }
         return true;
@@ -309,6 +369,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", wishList=" + wishList + '}';
+        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", image=" + image + ", wishList=" + wishList + ", comments=" + comments + ", offers=" + offers + '}';
     }
 }

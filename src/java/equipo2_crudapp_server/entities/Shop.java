@@ -8,14 +8,21 @@ package equipo2_crudapp_server.entities;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.Basic;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity for shop.
@@ -53,8 +60,13 @@ public class Shop implements Serializable {
     /**
      * Image or logo of the shop.
      */
-    private Blob image;
+    @Lob
+    @Basic(fetch=EAGER)
+    private byte[] image;
 
+    @OneToMany (mappedBy = "shop", fetch = EAGER, cascade = ALL)
+    private Set<Offer> offers;
+    
     /**
      * @return the shopId
      */
@@ -97,18 +109,31 @@ public class Shop implements Serializable {
         this.url = url;
     }
 
-    @Override
-    public String toString() {
-        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + ", image=" + image + '}';
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    @XmlTransient
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.shopId);
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.url);
-        hash = 67 * hash + Objects.hashCode(this.image);
+        hash = 13 * hash + Objects.hashCode(this.shopId);
+        hash = 13 * hash + Objects.hashCode(this.name);
+        hash = 13 * hash + Objects.hashCode(this.url);
+        hash = 13 * hash + Objects.hashCode(this.image);
+        hash = 13 * hash + Objects.hashCode(this.offers);
         return hash;
     }
 
@@ -136,6 +161,14 @@ public class Shop implements Serializable {
         if (!Objects.equals(this.image, other.image)) {
             return false;
         }
+        if (!Objects.equals(this.offers, other.offers)) {
+            return false;
+        }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + ", image=" + image + ", offers=" + offers + '}';
     }
 }

@@ -9,11 +9,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "offer", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllOffers",
-            query = "SELECT a FROM Offer a ORDER BY a.id DESC")
+        query = "SELECT a FROM Offer a ORDER BY a.id DESC")
 @XmlRootElement
 public class Offer implements Serializable {
 
@@ -82,21 +85,21 @@ public class Offer implements Serializable {
     /**
      * Software offered in the offer.
      */
-    @NotNull
-    @ManyToOne
+    @MapsId("softwareId")
+    @ManyToOne(fetch = EAGER)
     private Software software;
 
     /**
      * Shop providing the offer.
      */
-    @NotNull
-    @ManyToOne
+    @MapsId("shopId")
+    @ManyToOne(fetch = EAGER)
     private Shop shop;
 
     /**
      * Set of comments of the offer.
      */
-    @OneToMany
+    @OneToMany(mappedBy = "offer", fetch = EAGER, cascade = ALL)
     private Set<Comment> comments;
 
     /**

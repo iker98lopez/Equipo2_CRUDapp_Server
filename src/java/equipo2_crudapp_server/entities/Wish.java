@@ -8,10 +8,12 @@ package equipo2_crudapp_server.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "wish", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllWishes",
-            query = "SELECT a FROM Wish a ORDER BY a.id DESC")
+        query = "SELECT a FROM Wish a ORDER BY a.id DESC")
 @XmlRootElement
 public class Wish implements Serializable {
 
@@ -41,15 +43,15 @@ public class Wish implements Serializable {
     /**
      * The software in the wish
      */
-    @NotNull
-    @ManyToOne
+    @MapsId("softwareId")
+    @ManyToOne(fetch = EAGER)
     private Software software;
 
     /**
      * User owner of the wish
      */
-    @NotNull
-    @ManyToOne
+    @MapsId("userId")
+    @ManyToOne(fetch = EAGER)
     private User user;
 
     /**

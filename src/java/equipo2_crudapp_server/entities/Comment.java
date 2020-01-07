@@ -8,10 +8,12 @@ package equipo2_crudapp_server.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -48,9 +50,13 @@ public class Comment implements Serializable {
     /**
      * The user that has created the comment
      */
-    @NotNull
-    @ManyToOne
+    @MapsId("userId")
+    @ManyToOne(fetch=EAGER)
     private User user;
+    
+    @MapsId("offerId")
+    @ManyToOne(fetch=EAGER)
+    private Offer offer;
 
     /**
      * @return the commentId
@@ -95,12 +101,22 @@ public class Comment implements Serializable {
         this.user = user;
     }
 
+    @XmlTransient
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 43 * hash + Objects.hashCode(this.commentId);
-        hash = 43 * hash + Objects.hashCode(this.comment);
-        hash = 43 * hash + Objects.hashCode(this.user);
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.commentId);
+        hash = 11 * hash + Objects.hashCode(this.comment);
+        hash = 11 * hash + Objects.hashCode(this.user);
+        hash = 11 * hash + Objects.hashCode(this.offer);
         return hash;
     }
 
@@ -125,11 +141,11 @@ public class Comment implements Serializable {
         if (!Objects.equals(this.user, other.user)) {
             return false;
         }
+        if (!Objects.equals(this.offer, other.offer)) {
+            return false;
+        }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Comment{" + "commentId=" + commentId + ", comment=" + comment + ", user=" + user + '}';
-    }
+   
 }
