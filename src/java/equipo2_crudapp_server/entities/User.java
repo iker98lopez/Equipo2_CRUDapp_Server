@@ -109,15 +109,20 @@ public class User implements Serializable {
     private byte[] image;
 
     /**
-     * A list with all the software wishes of the user
-    @OneToMany(mappedBy = "user", fetch = EAGER, cascade=ALL)
-    private Set<Wish> wishList;   */
+     * A set with all the software wishes of the user
+     */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade=ALL)
     private Set<Wish> wishList;
 
+    /**
+     * A list with all the comments of the user
+     */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
     private List<Comment> comments;
     
+    /**
+     * A list with all the offers of the user
+     */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
     private List<Offer> offers;
     
