@@ -6,7 +6,6 @@
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -81,14 +80,12 @@ public class User implements Serializable {
     /**
      * The date of the las password change
      */
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastPasswordChange;
 
     /**
      * The last time the user logged in
      */
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLogin;
 
@@ -112,15 +109,20 @@ public class User implements Serializable {
     private byte[] image;
 
     /**
-     * A list with all the software wishes of the user
-    @OneToMany(mappedBy = "user", fetch = EAGER, cascade=ALL)
-    private Set<Wish> wishList;   */
+     * A set with all the software wishes of the user
+     */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade=ALL)
     private Set<Wish> wishList;
 
+    /**
+     * A list with all the comments of the user
+     */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
     private List<Comment> comments;
     
+    /**
+     * A list with all the offers of the user
+     */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
     private List<Offer> offers;
     

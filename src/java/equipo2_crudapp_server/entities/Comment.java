@@ -50,10 +50,15 @@ public class Comment implements Serializable {
     /**
      * The user that has created the comment
      */
+    @NotNull
     @MapsId("userId")
     @ManyToOne(fetch=EAGER)
     private User user;
     
+    /**
+     * The offer to which the comments belong
+     */
+    @NotNull
     @MapsId("offerId")
     @ManyToOne(fetch=EAGER)
     private Offer offer;
@@ -101,11 +106,18 @@ public class Comment implements Serializable {
         this.user = user;
     }
 
+    /**
+     * @return the offer
+     */
     @XmlTransient
     public Offer getOffer() {
         return offer;
     }
 
+    /**
+     * 
+     * @param offer the offer to set
+     */
     public void setOffer(Offer offer) {
         this.offer = offer;
     }
