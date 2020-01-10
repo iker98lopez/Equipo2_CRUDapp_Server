@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Basic;
 import static javax.persistence.CascadeType.ALL;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
@@ -60,6 +61,7 @@ public class User implements Serializable {
      * The login of the user
      */
     @NotNull
+    @Column(unique = true)
     private String login;
 
     /**
@@ -78,6 +80,7 @@ public class User implements Serializable {
      * The email of the user
      */
     @NotNull
+    @Column(unique = true)
     private String email;
 
     /**

@@ -62,7 +62,7 @@ public class UserREST {
 
     /**
      * Method that modifies the password of the specified user
-     * 
+     *
      * @param password New password for the user
      * @param user User to change
      */
@@ -72,38 +72,8 @@ public class UserREST {
     public void modifyPassword(@PathParam("password") String password, User user) {
         user.setPassword(password);
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
-        
+
         ejbUser.modifyUser(user);
-    }
-
-    /**
-     * This method receives an email and gets the user, then generates a random
-     * alphanumerical temporal 8 character long password and sets it as the new
-     * password. Then, it send an email to the user with the temporal password
-     *
-     * @param email Email of the user
-     */
-    @PUT
-    @Path("email/{email}")
-    @Consumes({MediaType.APPLICATION_XML})
-    public void recoverPassword(@PathParam("email") String email) {
-
-        User user = this.findUserByEmail(email);
-
-        SecureRandom random = new SecureRandom();
-        String password = "";
-        String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-
-        for (int i = 0; i < 8; i++) {
-            password += validChars.charAt(1 + random.nextInt(validChars.length()));
-        }
-
-        user.setPassword(password);
-        user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
-        ejbUser.modifyUser(user);
-
-        EmailSender emailSender = new EmailSender();
-        emailSender.sendRecoveryMail(email, password);
     }
 
     /**
@@ -173,5 +143,34 @@ public class UserREST {
     @Produces({MediaType.APPLICATION_XML})
     public List<User> findAllUsers() {
         return ejbUser.findAllUsers();
+    }
+
+    /**
+     * This method receives an email and checks if there is a user with that
+     * email in the database. If the user exists, generates a temporary 8
+     * character long alphanumeric code and returns it
+     * 
+     * @param email Email of the user
+     */
+    @GET
+    @Path("email/{email}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String getRecoveryCode(@PathParam("email") String email) {
+
+        String recoveryCode = null;
+        
+        if (this.findUserByEmail(email) != null) {
+            SecureRandom random = new SecureRandom();
+            String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+
+            for (int i = 0; i < 8; i++) {
+                recoveryCode += validChars.charAt(1 + random.nextInt(validChars.length()));
+            }
+
+            EmailSender emailSender = new EmailSender();
+            emailSender.sendRecoveryMail(email, recoveryCode);
+        }
+
+        return recoveryCode;
     }
 }
