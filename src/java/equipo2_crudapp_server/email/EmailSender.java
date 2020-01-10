@@ -28,7 +28,7 @@ import javax.mail.internet.MimeMultipart;
  *
  * @author iker lopez carrillo
  */
-public class Email {
+public class EmailSender {
 
     private static final Logger LOGGER = Logger.getLogger("pspcifrado.email.Email");
 
@@ -46,7 +46,7 @@ public class Email {
      * uses the class CipheringManager to retrieve the password of the account
      * from the file credentials.dat and deciphers it.
      */
-    public Email() {
+    public EmailSender() {
         this.smtp_host = DEFAULT_SMTP_HOST;
         this.smtp_port = DEFAULT_SMTP_PORT;
 
@@ -61,7 +61,7 @@ public class Email {
      * @param host Host to set.
      * @param port Port to set.
      */
-    public Email(String host, String port) {
+    public EmailSender(String host, String port) {
         this.smtp_host = (host == null ? DEFAULT_SMTP_HOST : host);
         this.smtp_port = (port == null ? DEFAULT_SMTP_PORT : new Integer(port).intValue());
 

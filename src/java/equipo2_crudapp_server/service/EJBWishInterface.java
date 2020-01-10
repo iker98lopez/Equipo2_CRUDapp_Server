@@ -10,7 +10,8 @@ import java.util.List;
 import javax.ejb.Local;
 
 /**
- *
+ * Interface implemented by EJBWish.
+ * 
  * @author Adrián García
  */
 @Local

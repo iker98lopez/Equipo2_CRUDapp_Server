@@ -10,7 +10,8 @@ import java.util.List;
 import javax.ejb.Local;
 
 /**
- *
+ * Interface implemented by EJBComment.
+ * 
  * @author Adrián García
  */
 @Local

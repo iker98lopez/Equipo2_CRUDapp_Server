@@ -19,7 +19,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+ * RESTful service provider for the entity Shop.
+ * 
  * @author Diego Corral
  */
 @Path("shop")

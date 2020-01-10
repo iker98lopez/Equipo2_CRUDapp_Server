@@ -10,7 +10,8 @@ import java.util.List;
 import javax.ejb.Local;
 
 /**
- *
+ * Interface implemented by EJBUser.
+ * 
  * @author Diego Corral
  */
 @Local
@@ -42,12 +43,26 @@ public interface EJBUserInterface {
     public User findUser(Integer userId);
 
     /**
+     * Method that searches for a user with the specified email
+     *
+     * @param email Email of the user to find
+     * @return The user found
+     */
+    public User findUserByEmail(String email);
+    
+    /**
      * Finds and returns a list containing all the users from the database.
      *
      * @return List of type User with all the users found.
      */
     public List<User> findAllUsers();
     
-    
+    /**
+     * Method to check the credentials of a user.
+     * 
+     * @param login Login of the user.
+     * @param password Password of the user.
+     * @return The user, if found.
+     */
     public User checkUserPassword(String login, String password);
 }
