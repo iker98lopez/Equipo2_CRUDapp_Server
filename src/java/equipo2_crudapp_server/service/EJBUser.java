@@ -12,17 +12,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * Enterprise Java Bean that contains all the logic for the entity User.
+ * 
  * @author Diego Corral
  */
 @Stateless
-public class EJBUser implements EJBUserInterface{
+public class EJBUser implements EJBUserInterface {
 
     @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
     private EntityManager entityManager;
 
     /**
      * Creates a new user in the database
+     *
      * @param user User to create
      */
     @Override
@@ -32,6 +34,7 @@ public class EJBUser implements EJBUserInterface{
 
     /**
      * Updates an existing user in the database
+     *
      * @param user User that is going to be modified with the new values
      */
     @Override
@@ -41,6 +44,7 @@ public class EJBUser implements EJBUserInterface{
 
     /**
      * Deletes an specified user
+     *
      * @param userId Id of the user to delete
      */
     @Override
@@ -50,12 +54,23 @@ public class EJBUser implements EJBUserInterface{
 
     /**
      * Search for an specified user in the database
+     *
      * @param userId Id of the user to search
      * @return The user found
      */
     @Override
     public User findUser(Integer userId) {
         return entityManager.find(User.class, userId);
+    }
+
+    /**
+     * Method that searches for a user with the specified email
+     *
+     * @param email Email of the user to find
+     * @return The user found
+     */
+    public User findUserByEmail(String email) {
+        return (User) entityManager.createNamedQuery("findUserByEmail").setParameter("email", email).getSingleResult();
     }
 
     /**
@@ -66,8 +81,15 @@ public class EJBUser implements EJBUserInterface{
     @Override
     public List<User> findAllUsers() {
         return entityManager.createNamedQuery("findAllUsers").getResultList();
-    }  
-    
+    }
+
+    /**
+     * Method to check the credentials of a user.
+     *
+     * @param login Login of the user.
+     * @param password Password of the user.
+     * @return The user, if found.
+     */
     @Override
     public User checkUserPassword(String login, String password) {
         return (User) entityManager.createNamedQuery("checkUserPassword").setParameter("login", login).setParameter("password", password).getSingleResult();

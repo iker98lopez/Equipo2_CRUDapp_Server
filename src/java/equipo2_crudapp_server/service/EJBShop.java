@@ -12,7 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * Enterprise Java Bean that contains all the logic for the entity Shop.
+ * 
  * @author Diego Corral
  */
 @Stateless

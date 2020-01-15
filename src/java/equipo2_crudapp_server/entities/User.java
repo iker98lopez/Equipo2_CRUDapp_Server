@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Basic;
 import static javax.persistence.CascadeType.ALL;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
@@ -38,8 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "findAllUsers",
             query = "SELECT a FROM User a ORDER BY a.id DESC")
     ,
-        @NamedQuery(name = "checkUserPassword",
+    @NamedQuery(name = "checkUserPassword",
             query = "SELECT a FROM User a WHERE a.login = :login AND a.password = :password")
+    ,
+    @NamedQuery(name = "findUserByEmail",
+            query = "SELECT a FROM User a WHERE a.email = :email")
 })
 @XmlRootElement
 public class User implements Serializable {
@@ -57,6 +61,7 @@ public class User implements Serializable {
      * The login of the user
      */
     @NotNull
+    @Column(unique = true)
     private String login;
 
     /**
@@ -75,6 +80,7 @@ public class User implements Serializable {
      * The email of the user
      */
     @NotNull
+    @Column(unique = true)
     private String email;
 
     /**
@@ -105,13 +111,13 @@ public class User implements Serializable {
      * Profile image of the user
      */
     @Lob
-    @Basic(fetch=EAGER)
+    @Basic(fetch = EAGER)
     private byte[] image;
 
     /**
      * A set with all the software wishes of the user
      */
-    @OneToMany(mappedBy = "user", fetch = EAGER, cascade=ALL)
+    @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
     private Set<Wish> wishList;
 
     /**
@@ -119,13 +125,13 @@ public class User implements Serializable {
      */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
     private List<Comment> comments;
-    
+
     /**
      * A list with all the offers of the user
      */
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = ALL)
     private List<Offer> offers;
-    
+
     /**
      * @return the userId
      */

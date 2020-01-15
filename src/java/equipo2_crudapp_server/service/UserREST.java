@@ -5,7 +5,11 @@
  */
 package equipo2_crudapp_server.service;
 
+import equipo2_crudapp_server.email.EmailSender;
 import equipo2_crudapp_server.entities.User;
+import java.security.SecureRandom;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -19,6 +23,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
+ * RESTful service provider for the entity User.
  *
  * @author Diego Corral
  */
@@ -56,6 +61,22 @@ public class UserREST {
     }
 
     /**
+     * Method that modifies the password of the specified user
+     *
+     * @param password New password for the user
+     * @param user User to change
+     */
+    @PUT
+    @Path("password/{password}")
+    @Consumes({MediaType.APPLICATION_XML})
+    public void modifyPassword(@PathParam("password") String password, User user) {
+        user.setPassword(password);
+        user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
+
+        ejbUser.modifyUser(user);
+    }
+
+    /**
      * Method that deletes a user from the database
      *
      * @param userId Id of the user that is going to be deleted
@@ -67,7 +88,7 @@ public class UserREST {
     }
 
     /**
-     * Method that search for a user
+     * Method that searches for a user
      *
      * @param userId Id of the user to find
      * @return The user found
@@ -79,21 +100,77 @@ public class UserREST {
         return ejbUser.findUser(userId);
     }
 
+    /**
+     * Method that searches for a user with the specified email
+     *
+     * @param email EmailSender of the user to find
+     * @return The user found
+     */
     @GET
-    @Path("{login}/{password}")
+    @Path("email/{email}")
     @Produces({MediaType.APPLICATION_XML})
-    public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
-        return ejbUser.checkUserPassword(login, password);
+    public User findUserByEmail(@PathParam("email") String email) {
+        return ejbUser.findUserByEmail(email);
     }
 
     /**
-     * Finds and returns a list containing all the users from the database.
+     * Method to check the credentials of a user
      *
-     * @return List of type User with all the users found.
+     * @param login Login of the user
+     * @param password Password of the user
+     * @return The user, if found
+     */
+    @GET
+    @Path("credentials/{login}/{password}")
+    @Produces({MediaType.APPLICATION_XML})
+    public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
+        User user = ejbUser.checkUserPassword(login, password);
+
+        if (user != null) {
+            user.setLastLogin(Date.valueOf(LocalDate.now()));
+            ejbUser.modifyUser(user);
+        }
+
+        return user;
+    }
+
+    /**
+     * Finds and returns a list containing all the users from the database
+     *
+     * @return List of type User with all the users found
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
     public List<User> findAllUsers() {
         return ejbUser.findAllUsers();
+    }
+
+    /**
+     * This method receives an email and checks if there is a user with that
+     * email in the database. If the user exists, generates a temporary 8
+     * character long alphanumeric code and returns it
+     * 
+     * @param email Email of the user
+     */
+    @GET
+    @Path("email/{email}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String getRecoveryCode(@PathParam("email") String email) {
+
+        String recoveryCode = null;
+        
+        if (this.findUserByEmail(email) != null) {
+            SecureRandom random = new SecureRandom();
+            String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+
+            for (int i = 0; i < 8; i++) {
+                recoveryCode += validChars.charAt(1 + random.nextInt(validChars.length()));
+            }
+
+            EmailSender emailSender = new EmailSender();
+            emailSender.sendRecoveryMail(email, recoveryCode);
+        }
+
+        return recoveryCode;
     }
 }

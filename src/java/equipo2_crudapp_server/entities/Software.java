@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Basic;
 import static javax.persistence.CascadeType.ALL;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
@@ -53,6 +54,7 @@ public class Software implements Serializable {
      * Name of the software.
      */
     @NotNull
+    @Column(unique = true)
     private String name;
 
     /**
