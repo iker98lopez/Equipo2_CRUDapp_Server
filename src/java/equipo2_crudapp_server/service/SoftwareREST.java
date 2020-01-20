@@ -1,7 +1,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Software;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -82,7 +82,7 @@ public class SoftwareREST {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<Software> findAllSoftwares() {
+    public Set<Software> findAllSoftwares() {
         return ejbSoftware.findAllSoftwares();
     }
 
@@ -95,7 +95,7 @@ public class SoftwareREST {
     @GET
     @Path("findByName/{name}")
     @Produces({MediaType.APPLICATION_XML})
-    public List<Software> findSoftwaresByName(@PathParam("name") String name) {
+    public Set<Software> findSoftwaresByName(@PathParam("name") String name) {
         return ejbSoftware.findSoftwaresByName(name);
     }
 }

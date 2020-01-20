@@ -1,7 +1,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Software;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
@@ -48,7 +48,7 @@ public interface EJBSoftwareInterface {
      *
      * @return List of type Software with all the softwares in the database.
      */
-    public List<Software> findAllSoftwares();
+    public Set<Software> findAllSoftwares();
 
     /**
      * This function finds all softwares with a name that contains the String
@@ -58,5 +58,5 @@ public interface EJBSoftwareInterface {
      * @return List of type Software with all the softwares from the result of
      * the query.
      */
-    public List<Software> findSoftwaresByName(String name);
+    public Set<Software> findSoftwaresByName(String name);
 }
