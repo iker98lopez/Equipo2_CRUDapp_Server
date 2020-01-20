@@ -6,7 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -83,7 +83,7 @@ public class ShopREST {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<Shop> findAllShops() {
+    public Set<Shop> findAllShops() {
         return ejbShop.findAllShops();
     }
 }

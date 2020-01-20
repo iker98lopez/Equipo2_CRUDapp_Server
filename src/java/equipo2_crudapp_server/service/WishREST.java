@@ -6,7 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Wish;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -83,7 +83,7 @@ public class WishREST {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<Wish> findAllWishes() {
+    public Set<Wish> findAllWishes() {
         return ejbWish.findAllWishes();
     }
 }

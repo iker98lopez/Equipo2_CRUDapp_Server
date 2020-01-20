@@ -10,7 +10,7 @@ import equipo2_crudapp_server.entities.User;
 import java.security.SecureRandom;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -141,7 +141,7 @@ public class UserREST {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<User> findAllUsers() {
+    public Set<User> findAllUsers() {
         return ejbUser.findAllUsers();
     }
 
@@ -151,6 +151,7 @@ public class UserREST {
      * character long alphanumeric code and returns it
      * 
      * @param email Email of the user
+     * @return String Recovery code for the client
      */
     @GET
     @Path("email/{email}")
