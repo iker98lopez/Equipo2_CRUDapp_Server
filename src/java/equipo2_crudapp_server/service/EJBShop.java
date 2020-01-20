@@ -6,7 +6,8 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -66,7 +67,7 @@ public class EJBShop implements EJBShopInterface{
      * @return List of type Shop with all the shops in the database.
      */
     @Override
-    public List<Shop> findAllShops() {
-        return entityManager.createNamedQuery("findAllShops").getResultList();
+    public Set<Shop> findAllShops() {
+        return new HashSet<Shop>(entityManager.createNamedQuery("findAllShops").getResultList());
     }
 }

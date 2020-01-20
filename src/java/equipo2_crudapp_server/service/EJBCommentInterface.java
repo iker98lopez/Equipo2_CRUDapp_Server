@@ -6,7 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
@@ -51,5 +51,5 @@ public interface EJBCommentInterface {
      *
      * @return List of type Comment with all the comments in the database.
      */
-    public List<Comment> findAllComments();
+    public Set<Comment> findAllComments();
 }

@@ -1,7 +1,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Offer;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
@@ -47,5 +47,5 @@ public interface EJBOfferInterface {
      *
      * @return List of type Offer with all the offers in the database.
      */
-    public List<Offer> findAllOffers();
+    public Set<Offer> findAllOffers();
 }

@@ -6,7 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.User;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
@@ -55,7 +55,7 @@ public interface EJBUserInterface {
      *
      * @return List of type User with all the users found.
      */
-    public List<User> findAllUsers();
+    public Set<User> findAllUsers();
     
     /**
      * Method to check the credentials of a user.

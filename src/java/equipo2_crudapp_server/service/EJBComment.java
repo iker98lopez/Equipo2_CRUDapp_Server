@@ -6,7 +6,8 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -71,7 +72,7 @@ public class EJBComment implements EJBCommentInterface {
      * @return List of type Comment with all the comments in the database.
      */
     @Override
-    public List<Comment> findAllComments() {
-        return entityManager.createNamedQuery("findAllComments").getResultList();
+    public Set<Comment> findAllComments() {
+        return new HashSet<Comment>(entityManager.createNamedQuery("findAllComments").getResultList());
     }
 }

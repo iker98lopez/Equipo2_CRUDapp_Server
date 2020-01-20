@@ -6,7 +6,8 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.User;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -79,8 +80,8 @@ public class EJBUser implements EJBUserInterface {
      * @return List of type User with all the users in the database.
      */
     @Override
-    public List<User> findAllUsers() {
-        return entityManager.createNamedQuery("findAllUsers").getResultList();
+    public Set<User> findAllUsers() {
+        return new HashSet<User>(entityManager.createNamedQuery("findAllUsers").getResultList());
     }
 
     /**

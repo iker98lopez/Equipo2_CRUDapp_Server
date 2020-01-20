@@ -6,7 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -83,7 +83,7 @@ public class CommentREST {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<Comment> findAllComments() {
+    public Set<Comment> findAllComments() {
         return ejbComment.findAllComments();
     }
 }
