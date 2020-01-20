@@ -1,6 +1,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Software;
+import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -68,7 +69,7 @@ public class EJBSoftware implements EJBSoftwareInterface {
      */
     @Override
     public Set<Software> findAllSoftwares() {
-        return (Set) entityManager.createNamedQuery("findAllSoftwares").getResultList();
+        return new HashSet<Software>(entityManager.createNamedQuery("findAllSoftwares").getResultList());
     }
 
     /**
