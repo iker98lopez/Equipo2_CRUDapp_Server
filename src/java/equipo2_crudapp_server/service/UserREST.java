@@ -5,6 +5,8 @@
  */
 package equipo2_crudapp_server.service;
 
+import equipo2_crudapp_classes.enumerators.UserPrivilege;
+import equipo2_crudapp_classes.enumerators.UserStatus;
 import equipo2_crudapp_server.ciphering.CipheringManager;
 import equipo2_crudapp_server.email.EmailSender;
 import equipo2_crudapp_server.entities.User;
@@ -33,7 +35,7 @@ import javax.ws.rs.core.MediaType;
 public class UserREST {
 
     private static final Logger LOGGER = Logger.getLogger("equipo2_crudapp_server.service.UserREST");
-    
+
     /**
      * Enterprise Java Beans for the entity User
      */
@@ -48,14 +50,13 @@ public class UserREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public void createUser(User user) {
-        LOGGER.info("Creando user");
-
-        String toHash = new String(CipheringManager.decipherText(user.getPassword().getBytes()));
+        byte[] toHash = CipheringManager.decipherText(user.getPassword());
         user.setPassword(CipheringManager.hashCipher(toHash));
+        user.setLastLogin(Date.valueOf(LocalDate.now()));
+        user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
+        user.setPrivilege(UserPrivilege.USER);
+        user.setStatus(UserStatus.ENABLED);
         ejbUser.createUser(user);
-
-        LOGGER.info("User creado");
-
     }
 
     /**
@@ -68,7 +69,8 @@ public class UserREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyUser(@PathParam("id") Integer userId, User user) {
-        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(user.getPassword().getBytes()))));
+        byte[] toHash = CipheringManager.decipherText(user.getPassword());
+        user.setPassword(CipheringManager.hashCipher(toHash));
         ejbUser.modifyUser(user);
     }
 
@@ -82,7 +84,8 @@ public class UserREST {
     @Path("password/{password}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyPassword(@PathParam("password") String password, User user) {
-        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(password.getBytes()))));
+        byte[] toHash = CipheringManager.decipherText(user.getPassword());
+        user.setPassword(CipheringManager.hashCipher(toHash));
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
 
         ejbUser.modifyUser(user);
@@ -136,7 +139,8 @@ public class UserREST {
     @Path("credentials/{login}/{password}")
     @Produces({MediaType.APPLICATION_XML})
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
-        User user = ejbUser.checkUserPassword(login, CipheringManager.hashCipher(new String(CipheringManager.decipherText(password.getBytes()))));
+        byte[] toHash = CipheringManager.decipherText(password);
+        User user = ejbUser.checkUserPassword(login, CipheringManager.hashCipher(toHash));
 
         if (user != null) {
             user.setLastLogin(Date.valueOf(LocalDate.now()));
@@ -176,7 +180,7 @@ public class UserREST {
             SecureRandom random = new SecureRandom();
             String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 6; i++) {
                 recoveryCode += validChars.charAt(1 + random.nextInt(validChars.length()));
             }
 

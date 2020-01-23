@@ -50,7 +50,7 @@ public class EmailSender {
         this.smtp_host = DEFAULT_SMTP_HOST;
         this.smtp_port = DEFAULT_SMTP_PORT;
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("credentials.dat")));
+        this.password = new String(CipheringManager.decipherText(new String(CipheringManager.fileReader("credentials.dat"))));
     }
 
     /**
@@ -65,7 +65,7 @@ public class EmailSender {
         this.smtp_host = (host == null ? DEFAULT_SMTP_HOST : host);
         this.smtp_port = (port == null ? DEFAULT_SMTP_PORT : new Integer(port).intValue());
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("credentials.dat")));
+        this.password = new String(CipheringManager.decipherText(new String(CipheringManager.fileReader("credentials.dat"))));
     }
 
     /**
