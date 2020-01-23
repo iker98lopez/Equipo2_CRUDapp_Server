@@ -5,6 +5,7 @@
  */
 package equipo2_crudapp_server.service;
 
+import equipo2_crudapp_ciphering.CipheringManager;
 import equipo2_crudapp_server.email.EmailSender;
 import equipo2_crudapp_server.entities.User;
 import java.security.SecureRandom;
@@ -44,6 +45,7 @@ public class UserREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public void createUser(User user) {
+        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(user.getPassword().getBytes()))));
         ejbUser.createUser(user);
     }
 
@@ -57,6 +59,7 @@ public class UserREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyUser(@PathParam("id") Integer userId, User user) {
+        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(user.getPassword().getBytes()))));
         ejbUser.modifyUser(user);
     }
 
@@ -70,7 +73,7 @@ public class UserREST {
     @Path("password/{password}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyPassword(@PathParam("password") String password, User user) {
-        user.setPassword(password);
+        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(password.getBytes()))));
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
 
         ejbUser.modifyUser(user);
@@ -124,7 +127,7 @@ public class UserREST {
     @Path("credentials/{login}/{password}")
     @Produces({MediaType.APPLICATION_XML})
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
-        User user = ejbUser.checkUserPassword(login, password);
+        User user = ejbUser.checkUserPassword(login, CipheringManager.hashCipher(new String(CipheringManager.decipherText(password.getBytes()))));
 
         if (user != null) {
             user.setLastLogin(Date.valueOf(LocalDate.now()));

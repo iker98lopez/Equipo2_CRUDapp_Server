@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  * Enterprise Java Bean that contains all the logic for the entity User.
- * 
+ *
  * @author Diego Corral
  */
 @Stateless
