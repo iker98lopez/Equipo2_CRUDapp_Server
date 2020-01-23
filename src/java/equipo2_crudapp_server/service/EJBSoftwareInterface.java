@@ -31,9 +31,9 @@ public interface EJBSoftwareInterface {
     /**
      * This function deletes an existing software. It is found by the given ID.
      *
-     * @param softwareId ID of the software to be deleted.
+     * @param software Software to be deleted.
      */
-    public void deleteSoftware(Integer softwareId);
+    public void deleteSoftware(Software software);
 
     /**
      * This function finds a software by the id it receives and returns it.

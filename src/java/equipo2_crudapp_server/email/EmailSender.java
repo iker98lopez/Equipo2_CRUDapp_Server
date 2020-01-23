@@ -5,7 +5,7 @@
  */
 package equipo2_crudapp_server.email;
 
-import equipo2_crudapp_ciphering.CipheringManager;
+import equipo2_crudapp_server.ciphering.CipheringManager;
 
 import java.util.Properties;
 import java.util.logging.Logger;

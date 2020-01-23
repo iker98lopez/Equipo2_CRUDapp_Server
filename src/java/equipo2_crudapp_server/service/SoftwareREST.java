@@ -59,7 +59,7 @@ public class SoftwareREST {
     @DELETE
     @Path("{id}")
     public void removeSoftware(@PathParam("id") Integer id) {
-        ejbSoftware.deleteSoftware(id);
+        ejbSoftware.deleteSoftware(ejbSoftware.findSoftware(id));
     }
 
     /**

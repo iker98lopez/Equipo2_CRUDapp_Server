@@ -59,7 +59,7 @@ public class OfferREST {
     @DELETE
     @Path("{id}")
     public void removeOffer(@PathParam("id") Integer id) {
-        ejbOffer.deleteOffer(id);
+        ejbOffer.deleteOffer(ejbOffer.findOffer(id));
     }
 
     /**

@@ -48,11 +48,11 @@ public class EJBComment implements EJBCommentInterface {
     /**
      * This function deletes an existing comment. It is found by the given ID.
      * 
-     * @param commentId ID of the comment to be deleted.
+     * @param comment Comment to be deleted.
      */
     @Override
-    public void deleteComment(Integer commentId) {
-        entityManager.remove(entityManager.merge(commentId));
+    public void deleteComment(Comment comment) {
+        entityManager.remove(entityManager.merge(comment));
     }
 
     /**

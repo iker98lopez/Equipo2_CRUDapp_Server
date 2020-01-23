@@ -47,8 +47,8 @@ public class EJBShop implements EJBShopInterface{
      * @param shopId Id of the shop to delete
      */
     @Override
-    public void deleteShop(Integer shopId) {
-        entityManager.remove(entityManager.merge(shopId));
+    public void deleteShop(Shop shop) {
+        entityManager.remove(entityManager.merge(shop));
     }
 
     /**

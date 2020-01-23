@@ -8,6 +8,7 @@ package equipo2_crudapp_server.service;
 import equipo2_crudapp_server.entities.User;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,11 +47,11 @@ public class EJBUser implements EJBUserInterface {
     /**
      * Deletes an specified user
      *
-     * @param userId Id of the user to delete
+     * @param user User to delete
      */
     @Override
-    public void deleteUser(Integer userId) {
-        entityManager.remove(entityManager.merge(userId));
+    public void deleteUser(User user) {
+        entityManager.remove(entityManager.merge(user));
     }
 
     /**

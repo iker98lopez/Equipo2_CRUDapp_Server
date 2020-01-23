@@ -5,13 +5,14 @@
  */
 package equipo2_crudapp_server.service;
 
-import equipo2_crudapp_ciphering.CipheringManager;
+import equipo2_crudapp_server.ciphering.CipheringManager;
 import equipo2_crudapp_server.email.EmailSender;
 import equipo2_crudapp_server.entities.User;
 import java.security.SecureRandom;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -31,6 +32,8 @@ import javax.ws.rs.core.MediaType;
 @Path("user")
 public class UserREST {
 
+    private static final Logger LOGGER = Logger.getLogger("equipo2_crudapp_server.service.UserREST");
+    
     /**
      * Enterprise Java Beans for the entity User
      */
@@ -45,8 +48,14 @@ public class UserREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public void createUser(User user) {
-        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(user.getPassword().getBytes()))));
+        LOGGER.info("Creando user");
+
+        String toHash = new String(CipheringManager.decipherText(user.getPassword().getBytes()));
+        user.setPassword(CipheringManager.hashCipher(toHash));
         ejbUser.createUser(user);
+
+        LOGGER.info("User creado");
+
     }
 
     /**
@@ -87,7 +96,7 @@ public class UserREST {
     @DELETE
     @Path("{id}")
     public void deleteUser(@PathParam("id") Integer userId) {
-        ejbUser.deleteUser(userId);
+        ejbUser.deleteUser(ejbUser.findUser(userId));
     }
 
     /**
@@ -152,7 +161,7 @@ public class UserREST {
      * This method receives an email and checks if there is a user with that
      * email in the database. If the user exists, generates a temporary 8
      * character long alphanumeric code and returns it
-     * 
+     *
      * @param email Email of the user
      * @return String Recovery code for the client
      */
@@ -162,7 +171,7 @@ public class UserREST {
     public String getRecoveryCode(@PathParam("email") String email) {
 
         String recoveryCode = null;
-        
+
         if (this.findUserByEmail(email) != null) {
             SecureRandom random = new SecureRandom();
             String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";

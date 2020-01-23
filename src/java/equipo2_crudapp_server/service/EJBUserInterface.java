@@ -31,9 +31,9 @@ public interface EJBUserInterface {
     
     /**
      * Deletes an specified user
-     * @param userId Id of the user to delete
+     * @param user User to delete
      */
-    public void deleteUser(Integer userId);
+    public void deleteUser(User user);
     
     /**
      * Search for an specified user in the database
