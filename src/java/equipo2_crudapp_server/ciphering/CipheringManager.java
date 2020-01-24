@@ -15,10 +15,8 @@ import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -26,19 +24,23 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 /**
- * This class contains methods to create hashings, ciphering and deciphering.
+ * This class contains methods to decipher texts and creating hashings.
  *
  * @author iker lopez carrillo
  */
 public class CipheringManager {
 
+    /**
+     * Logger to show error messages and exceptions.
+     */
     private static final Logger LOGGER = Logger.getLogger("equipo2_crudapp_ciphering.HashCipher");
 
     /**
-     * Generates a hashing from the String received and returns it.
+     * Generates a hashing from the byte array received and returns it as a
+     * String in hexadecimal.
      *
-     * @param text String to be ciphered.
-     * @return hashing of the text received.
+     * @param text byte array to be ciphered.
+     * @return hashing of the text received as a string in hexadecimal.
      */
     public static String hashCipher(byte[] text) {
 
@@ -46,46 +48,22 @@ public class CipheringManager {
         byte hash[] = null;
 
         try {
-            byte dataBytes[] = text;
-
             messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(dataBytes);
+            messageDigest.update(text);
 
             hash = messageDigest.digest();
         } catch (NoSuchAlgorithmException exception) {
             LOGGER.warning("There was an error while ciphering. " + exception.getMessage());
         }
-
         return byteToHex(hash);
     }
 
     /**
-     * This method receives a String and returns it ciphered.
-     *
-     * @param text String to cipher.
-     * @return ciphered String.
-     */
-    public static String cipherText(String text) {
-        byte[] encodedMessage = null;
-        try {
-            X509EncodedKeySpec spec = new X509EncodedKeySpec(fileReader("C:\\Users\\iker lopez carrillo\\Documents\\NetBeansProjects\\Equipo2_CRUDapp_Server\\src\\java\\equipo2_crudapp_server\\ciphering\\public.key"));
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            PublicKey publicKey = keyFactory.generatePublic(spec);
-
-            Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            encodedMessage = cipher.doFinal(hexToByte(text));
-        } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException exception) {
-            LOGGER.warning("There was an error trying to cipher the text. " + exception.getClass() + " " + exception.getMessage());
-        }
-        return byteToHex(encodedMessage);
-    }
-
-    /**
-     * This method receives a ciphered String, deciphers it and returns it.
+     * This method receives a ciphered String, deciphers it and returns it as a
+     * byte array.
      *
      * @param text String to decipher.
-     * @return deciphered String.
+     * @return deciphered String as byte array.
      */
     public static byte[] decipherText(String text) {
         byte[] decodedMessage = null;
@@ -100,7 +78,6 @@ public class CipheringManager {
         } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException exception) {
             LOGGER.warning("There was an error trying to decipher the text. " + exception.getClass() + " " + exception.getMessage());
         }
-
         return decodedMessage;
     }
 
@@ -141,7 +118,7 @@ public class CipheringManager {
         }
         return byteText;
     }
-    
+
     /**
      * This method reads the file in the path it receives and returns it as a
      * byte array.
@@ -180,7 +157,6 @@ public class CipheringManager {
                 }
             }
         }
-
         return out.toByteArray();
     }
 }
