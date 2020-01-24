@@ -5,13 +5,16 @@
  */
 package equipo2_crudapp_server.service;
 
-import equipo2_crudapp_ciphering.CipheringManager;
+import equipo2_crudapp_classes.enumerators.UserPrivilege;
+import equipo2_crudapp_classes.enumerators.UserStatus;
+import equipo2_crudapp_server.ciphering.CipheringManager;
 import equipo2_crudapp_server.email.EmailSender;
 import equipo2_crudapp_server.entities.User;
 import java.security.SecureRandom;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -31,6 +34,8 @@ import javax.ws.rs.core.MediaType;
 @Path("user")
 public class UserREST {
 
+    private static final Logger LOGGER = Logger.getLogger("equipo2_crudapp_server.service.UserREST");
+
     /**
      * Enterprise Java Beans for the entity User
      */
@@ -45,7 +50,12 @@ public class UserREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public void createUser(User user) {
-        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(user.getPassword().getBytes()))));
+        byte[] toHash = CipheringManager.decipherText(user.getPassword());
+        user.setPassword(CipheringManager.hashCipher(toHash));
+        user.setLastLogin(Date.valueOf(LocalDate.now()));
+        user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
+        user.setPrivilege(UserPrivilege.USER);
+        user.setStatus(UserStatus.ENABLED);
         ejbUser.createUser(user);
     }
 
@@ -59,7 +69,8 @@ public class UserREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyUser(@PathParam("id") Integer userId, User user) {
-        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(user.getPassword().getBytes()))));
+        byte[] toHash = CipheringManager.decipherText(user.getPassword());
+        user.setPassword(CipheringManager.hashCipher(toHash));
         ejbUser.modifyUser(user);
     }
 
@@ -73,7 +84,8 @@ public class UserREST {
     @Path("password/{password}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyPassword(@PathParam("password") String password, User user) {
-        user.setPassword(CipheringManager.hashCipher(new String(CipheringManager.decipherText(password.getBytes()))));
+        byte[] toHash = CipheringManager.decipherText(user.getPassword());
+        user.setPassword(CipheringManager.hashCipher(toHash));
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
 
         ejbUser.modifyUser(user);
@@ -87,7 +99,7 @@ public class UserREST {
     @DELETE
     @Path("{id}")
     public void deleteUser(@PathParam("id") Integer userId) {
-        ejbUser.deleteUser(userId);
+        ejbUser.deleteUser(ejbUser.findUser(userId));
     }
 
     /**
@@ -127,7 +139,8 @@ public class UserREST {
     @Path("credentials/{login}/{password}")
     @Produces({MediaType.APPLICATION_XML})
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
-        User user = ejbUser.checkUserPassword(login, CipheringManager.hashCipher(new String(CipheringManager.decipherText(password.getBytes()))));
+        byte[] toHash = CipheringManager.decipherText(password);
+        User user = ejbUser.checkUserPassword(login, CipheringManager.hashCipher(toHash));
 
         if (user != null) {
             user.setLastLogin(Date.valueOf(LocalDate.now()));
@@ -152,7 +165,7 @@ public class UserREST {
      * This method receives an email and checks if there is a user with that
      * email in the database. If the user exists, generates a temporary 8
      * character long alphanumeric code and returns it
-     * 
+     *
      * @param email Email of the user
      * @return String Recovery code for the client
      */
@@ -162,12 +175,12 @@ public class UserREST {
     public String getRecoveryCode(@PathParam("email") String email) {
 
         String recoveryCode = null;
-        
+
         if (this.findUserByEmail(email) != null) {
             SecureRandom random = new SecureRandom();
             String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 6; i++) {
                 recoveryCode += validChars.charAt(1 + random.nextInt(validChars.length()));
             }
 

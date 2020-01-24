@@ -5,7 +5,7 @@
  */
 package equipo2_crudapp_server.email;
 
-import equipo2_crudapp_ciphering.CipheringManager;
+import equipo2_crudapp_server.ciphering.CipheringManager;
 
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart; 
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -50,7 +50,7 @@ public class EmailSender {
         this.smtp_host = DEFAULT_SMTP_HOST;
         this.smtp_port = DEFAULT_SMTP_PORT;
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("credentials.dat")));
+        this.password = new String(CipheringManager.decipherText(new String(CipheringManager.fileReader("credentials.dat"))));
     }
 
     /**
@@ -65,7 +65,7 @@ public class EmailSender {
         this.smtp_host = (host == null ? DEFAULT_SMTP_HOST : host);
         this.smtp_port = (port == null ? DEFAULT_SMTP_PORT : new Integer(port).intValue());
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("credentials.dat")));
+        this.password = new String(CipheringManager.decipherText(new String(CipheringManager.fileReader("credentials.dat"))));
     }
 
     /**

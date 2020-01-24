@@ -43,11 +43,11 @@ public class EJBOffer implements EJBOfferInterface {
     /**
      * This function deletes an existing offer. It is found by the given ID.
      *
-     * @param offerId ID of the offer to be deleted.
+     * @param offer Offer to be deleted.
      */
     @Override
-    public void deleteOffer(Integer offerId) {
-        entityManager.remove(entityManager.merge(offerId));
+    public void deleteOffer(Offer offer) {
+        entityManager.remove(entityManager.merge(offer));
     }
 
     /**

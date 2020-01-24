@@ -48,11 +48,11 @@ public class EJBWish implements EJBWishInterface {
     /**
      * This function deletes an existing wish. It is found by the given ID.
      * 
-     * @param wishId ID of the wish to be deleted.
+     * @param wish Wish to be deleted.
      */
     @Override
-    public void deleteWish(Integer wishId) {
-        entityManager.remove(entityManager.merge(wishId));
+    public void deleteWish(Wish wish) {
+        entityManager.remove(entityManager.merge(wish));
     }
 
     /**

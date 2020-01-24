@@ -30,9 +30,9 @@ public interface EJBOfferInterface {
     /**
      * This function deletes an existing offer. It is found by the given ID.
      *
-     * @param offerId ID of the offer to be deleted.
+     * @param offer Offer to be deleted.
      */
-    public void deleteOffer(Integer offerId);
+    public void deleteOffer(Offer offer);
 
     /**
      * This function finds a offer by the id it receives and returns it.

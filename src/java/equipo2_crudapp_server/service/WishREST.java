@@ -61,7 +61,7 @@ public class WishREST {
     @DELETE
     @Path("{id}")
     public void removeWish(@PathParam("id") Integer wishId) {
-        ejbWish.deleteWish(wishId);
+        ejbWish.deleteWish(ejbWish.findWish(wishId));
     }
 
     /**

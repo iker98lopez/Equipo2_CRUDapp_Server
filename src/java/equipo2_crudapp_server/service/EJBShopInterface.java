@@ -31,9 +31,9 @@ public interface EJBShopInterface {
 
     /**
      * Deletes an specified shop
-     * @param shopId Id of the shop to delete
+     * @param shop Shop to delete
      */
-    public void deleteShop(Integer shopId);
+    public void deleteShop(Shop shop);
 
     /**
      * Search for an specified shop in the database

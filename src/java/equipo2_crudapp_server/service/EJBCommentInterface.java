@@ -34,9 +34,9 @@ public interface EJBCommentInterface {
     /**
      * This function deletes an existing comment. It is found by the given ID.
      * 
-     * @param comment ID of the comment to be deleted.
+     * @param comment Comment to be deleted.
      */
-    public void deleteComment(Integer commentID);
+    public void deleteComment(Comment comment);
 
     /**
      * This function finds a comment by the id it receives and returns it.

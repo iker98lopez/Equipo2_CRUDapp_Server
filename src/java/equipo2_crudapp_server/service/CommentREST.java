@@ -61,7 +61,7 @@ public class CommentREST {
     @DELETE
     @Path("{id}")
     public void removeComment(@PathParam("id") Integer commentId) {
-        ejbComment.deleteComment(commentId);
+        ejbComment.deleteComment(ejbComment.findComment(commentId));
     }
 
     /**
