@@ -29,9 +29,11 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses (Set<Class<?>> resources) {
+        resources.add(equipo2_crudapp_server.service.CommentFacadeREST.class);
         resources.add(equipo2_crudapp_server.service.OfferREST.class);
         resources.add(equipo2_crudapp_server.service.ShopFacadeREST.class);
         resources.add(equipo2_crudapp_server.service.SoftwareREST.class);
         resources.add(equipo2_crudapp_server.service.UserFacadeREST.class);
+        resources.add(equipo2_crudapp_server.service.WishFacadeREST.class);
     }
 }
