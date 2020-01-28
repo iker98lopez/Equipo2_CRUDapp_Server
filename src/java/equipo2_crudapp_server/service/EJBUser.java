@@ -8,7 +8,6 @@ package equipo2_crudapp_server.service;
 import equipo2_crudapp_server.entities.User;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
