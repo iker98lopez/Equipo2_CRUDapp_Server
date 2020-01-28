@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,11 +19,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+ * RESTful service provider for the entity Shop.
+ * 
  * @author Diego Corral
  */
 @Path("shop")
-public class ShopFacadeREST {
+public class ShopREST {
     
     /**
      * Enterprise Java Beans for the entity User
@@ -54,12 +56,12 @@ public class ShopFacadeREST {
     
     /**
      * Method that deletes a shop from the database
-     * @param shopId Id of the shop to delete
+     * @param shop Shop to delete
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer shopId) {
-        ejbShop.deleteShop(shopId);
+    public void removeShop(@PathParam("id") Integer shopId) {
+        ejbShop.deleteShop(ejbShop.findShop(shopId));
     }
 
     /**
@@ -70,7 +72,18 @@ public class ShopFacadeREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Shop find(@PathParam("id") Integer shopId) {
+    public Shop findShop(@PathParam("id") Integer shopId) {
         return ejbShop.findShop(shopId);
+    }
+    
+    /**
+     * Finds and returns a list containing all the shops from the database.
+     *
+     * @return List of type Shop with all the shops found.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public Set<Shop> findAllShops() {
+        return ejbShop.findAllShops();
     }
 }

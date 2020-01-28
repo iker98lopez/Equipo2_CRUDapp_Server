@@ -6,10 +6,12 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Wish;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
- *
+ * Interface implemented by EJBWish.
+ * 
  * @author Adrián García
  */
 @Local
@@ -33,9 +35,9 @@ public interface EJBWishInterface {
     /**
      * This function deletes an existing wish. It is found by the given ID.
      * 
-     * @param wish ID of the software to be deleted.
+     * @param wish Wish to be deleted.
      */
-    public void deleteWish(Integer wishID);
+    public void deleteWish(Wish wish);
 
     /**
      * This function finds a wish by the id it receives and returns it.
@@ -44,4 +46,11 @@ public interface EJBWishInterface {
      * @return Wish, if found.
      */
     public Wish findWish(Integer id);
+
+    /**
+     * Finds and returns a list containing all the wishes from the database.
+     *
+     * @return List of type Wish with all the wishes found.
+     */
+    public Set<Wish> findAllWishes();
 }

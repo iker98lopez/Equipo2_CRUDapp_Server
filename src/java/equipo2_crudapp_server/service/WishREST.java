@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Wish;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,11 +19,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+ * RESTful service provider for the entity Wish.
+ * 
  * @author Adrián García
  */
 @Path("wish")
-public class WishFacadeREST {
+public class WishREST {
     
     /**
      * Enterprise Java Beans for the entity wish
@@ -58,8 +60,8 @@ public class WishFacadeREST {
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer wishId) {
-        ejbWish.deleteWish(wishId);
+    public void removeWish(@PathParam("id") Integer wishId) {
+        ejbWish.deleteWish(ejbWish.findWish(wishId));
     }
 
     /**
@@ -70,7 +72,18 @@ public class WishFacadeREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Wish find(@PathParam("id") Integer wishId) {
+    public Wish findWish(@PathParam("id") Integer wishId) {
         return ejbWish.findWish(wishId);
+    }
+        
+    /**
+     * Finds and returns a list containing all the wishes from the database.
+     *
+     * @return List of type Wish with all the wishes found.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public Set<Wish> findAllWishes() {
+        return ejbWish.findAllWishes();
     }
 }

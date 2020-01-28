@@ -1,7 +1,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Offer;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
@@ -30,9 +30,9 @@ public interface EJBOfferInterface {
     /**
      * This function deletes an existing offer. It is found by the given ID.
      *
-     * @param offerId ID of the offer to be deleted.
+     * @param offer Offer to be deleted.
      */
-    public void deleteOffer(Integer offerId);
+    public void deleteOffer(Offer offer);
 
     /**
      * This function finds a offer by the id it receives and returns it.
@@ -47,5 +47,5 @@ public interface EJBOfferInterface {
      *
      * @return List of type Offer with all the offers in the database.
      */
-    public List<Offer> findAllOffers();
+    public Set<Offer> findAllOffers();
 }

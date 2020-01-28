@@ -6,10 +6,12 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
- *
+ * Interface implemented by EJBShop.
+ * 
  * @author Diego Corral
  */
 @Local
@@ -29,9 +31,9 @@ public interface EJBShopInterface {
 
     /**
      * Deletes an specified shop
-     * @param shopId Id of the shop to delete
+     * @param shop Shop to delete
      */
-    public void deleteShop(Integer shopId);
+    public void deleteShop(Shop shop);
 
     /**
      * Search for an specified shop in the database
@@ -39,4 +41,11 @@ public interface EJBShopInterface {
      * @return The shop found
      */
     public Shop findShop(Integer shopId);
+
+    /**
+     * Finds and returns a list containing all the shops from the database.
+     *
+     * @return List of type Shop with all the shops found.
+     */
+    public Set<Shop> findAllShops();
 }

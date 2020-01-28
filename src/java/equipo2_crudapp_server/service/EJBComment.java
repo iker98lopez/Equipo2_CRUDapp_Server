@@ -6,6 +6,8 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,11 +48,11 @@ public class EJBComment implements EJBCommentInterface {
     /**
      * This function deletes an existing comment. It is found by the given ID.
      * 
-     * @param comment ID of the comment to be deleted.
+     * @param comment Comment to be deleted.
      */
     @Override
-    public void deleteComment(Integer commentId) {
-        entityManager.remove(entityManager.merge(commentId));
+    public void deleteComment(Comment comment) {
+        entityManager.remove(entityManager.merge(comment));
     }
 
     /**
@@ -62,5 +64,15 @@ public class EJBComment implements EJBCommentInterface {
     @Override
     public Comment findComment(Integer id) {
         return entityManager.find(Comment.class, id);
+    }
+    
+    /**
+     * This function finds all comments in the database and returns them.
+     *
+     * @return List of type Comment with all the comments in the database.
+     */
+    @Override
+    public Set<Comment> findAllComments() {
+        return new HashSet<Comment>(entityManager.createNamedQuery("findAllComments").getResultList());
     }
 }

@@ -1,7 +1,8 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Software;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,11 +44,11 @@ public class EJBSoftware implements EJBSoftwareInterface {
     /**
      * This function deletes an existing software. It is found by the given ID.
      *
-     * @param softwareId ID of the software to be deleted.
+     * @param software Software to be deleted.
      */
     @Override
-    public void deleteSoftware(Integer softwareId) {
-        entityManager.remove(entityManager.merge(softwareId));
+    public void deleteSoftware(Software software) {
+        entityManager.remove(entityManager.merge(software));
     }
 
     /**
@@ -67,8 +68,8 @@ public class EJBSoftware implements EJBSoftwareInterface {
      * @return List of type Software with all the softwares in the database.
      */
     @Override
-    public List<Software> findAllSoftwares() {
-        return entityManager.createNamedQuery("findAllSoftwares").getResultList();
+    public Set<Software> findAllSoftwares() {
+        return new HashSet<Software>(entityManager.createNamedQuery("findAllSoftwares").getResultList());
     }
 
     /**
@@ -79,7 +80,7 @@ public class EJBSoftware implements EJBSoftwareInterface {
      * the query.
      */
     @Override
-    public List<Software> findSoftwaresByName(String name) {
-        return entityManager.createNamedQuery("findSoftwaresByName").setParameter("name", name).getResultList();
+    public Set<Software> findSoftwaresByName(String name) {
+        return (Set) entityManager.createNamedQuery("findSoftwaresByName").setParameter("name", name).getResultList();
     }
 }

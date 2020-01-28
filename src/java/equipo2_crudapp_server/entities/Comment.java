@@ -5,43 +5,63 @@
  */
 package equipo2_crudapp_server.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Comment entity
+ *
  * @author Diego Corral
  */
 @Entity
-@Table( name = "comment", schema = "equipo2crudappdb")
+@Table(name = "comment", schema = "equipo2crudappdb")
+@NamedQuery(name = "findAllComments",
+            query = "SELECT a FROM Comment a ORDER BY a.id DESC")
 @XmlRootElement
-public class Comment {
-    
+public class Comment implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * The comment id
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer commentId;
-    
+
     /**
      * The text of the comment
      */
     @NotNull
     private String comment;
-    
+
     /**
      * The user that has created the comment
      */
     @NotNull
-    @ManyToOne ()
+    @MapsId("userId")
+    @ManyToOne(fetch=EAGER)
     private User user;
+    
+    /**
+     * The offer to which the comments belong
+     */
+    @NotNull
+    @MapsId("offerId")
+    @ManyToOne(fetch=EAGER)
+    private Offer offer;
 
     /**
      * @return the commentId
@@ -74,6 +94,7 @@ public class Comment {
     /**
      * @return the user
      */
+    @XmlTransient
     public User getUser() {
         return user;
     }
@@ -85,12 +106,29 @@ public class Comment {
         this.user = user;
     }
 
+    /**
+     * @return the offer
+     */
+    @XmlTransient
+    public Offer getOffer() {
+        return offer;
+    }
+
+    /**
+     * 
+     * @param offer the offer to set
+     */
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 43 * hash + Objects.hashCode(this.commentId);
-        hash = 43 * hash + Objects.hashCode(this.comment);
-        hash = 43 * hash + Objects.hashCode(this.user);
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.commentId);
+        hash = 11 * hash + Objects.hashCode(this.comment);
+        hash = 11 * hash + Objects.hashCode(this.user);
+        hash = 11 * hash + Objects.hashCode(this.offer);
         return hash;
     }
 
@@ -115,16 +153,11 @@ public class Comment {
         if (!Objects.equals(this.user, other.user)) {
             return false;
         }
+        if (!Objects.equals(this.offer, other.offer)) {
+            return false;
+        }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Comment{" + "commentId=" + commentId + ", comment=" + comment + ", user=" + user + '}';
-    }
-
-    
-    
-    
-    
+   
 }

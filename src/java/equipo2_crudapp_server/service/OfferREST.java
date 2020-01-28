@@ -1,7 +1,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Offer;
-import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -47,7 +47,7 @@ public class OfferREST {
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void edit(@PathParam("id") Integer id, Offer offer) {
+    public void editOffer(@PathParam("id") Integer id, Offer offer) {
         ejbOffer.modifyOffer(offer);
     }
 
@@ -58,8 +58,8 @@ public class OfferREST {
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        ejbOffer.deleteOffer(id);
+    public void removeOffer(@PathParam("id") Integer id) {
+        ejbOffer.deleteOffer(ejbOffer.findOffer(id));
     }
 
     /**
@@ -71,18 +71,18 @@ public class OfferREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Offer find(@PathParam("id") Integer id) {
+    public Offer findOffer(@PathParam("id") Integer id) {
         return ejbOffer.findOffer(id);
     }
 
     /**
      * Finds and returns a list containing all the offers from the database.
      *
-     * @return List with all the offers found.
+     * @return List of type Comment with all the offers found.
      */
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<Offer> findAll() {
+    public Set<Offer> findAllOffers() {
         return ejbOffer.findAllOffers();
     }
 }

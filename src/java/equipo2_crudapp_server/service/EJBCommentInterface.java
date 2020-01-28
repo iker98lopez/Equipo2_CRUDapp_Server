@@ -6,10 +6,12 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
- *
+ * Interface implemented by EJBComment.
+ * 
  * @author Adrián García
  */
 @Local
@@ -32,9 +34,9 @@ public interface EJBCommentInterface {
     /**
      * This function deletes an existing comment. It is found by the given ID.
      * 
-     * @param comment ID of the comment to be deleted.
+     * @param comment Comment to be deleted.
      */
-    public void deleteComment(Integer commentID);
+    public void deleteComment(Comment comment);
 
     /**
      * This function finds a comment by the id it receives and returns it.
@@ -43,4 +45,11 @@ public interface EJBCommentInterface {
      * @return Comment, if found.
      */
     public Comment findComment(Integer id);
+
+    /**
+     * This function finds all comments in the database and returns them.
+     *
+     * @return List of type Comment with all the comments in the database.
+     */
+    public Set<Comment> findAllComments();
 }

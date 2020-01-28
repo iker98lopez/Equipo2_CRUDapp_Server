@@ -6,7 +6,7 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Comment;
-import equipo2_crudapp_server.entities.Wish;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,11 +19,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+ * RESTful service provider for the entity Comment.
+ * 
  * @author Adrián García
  */
 @Path("Comment")
-public class CommentFacadeREST {
+public class CommentREST {
     
     /**
      * Enterprise Java Beans for the entity comment
@@ -59,8 +60,8 @@ public class CommentFacadeREST {
      */
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer commentId) {
-        ejbComment.deleteComment(commentId);
+    public void removeComment(@PathParam("id") Integer commentId) {
+        ejbComment.deleteComment(ejbComment.findComment(commentId));
     }
 
     /**
@@ -71,7 +72,18 @@ public class CommentFacadeREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Comment find(@PathParam("id") Integer commentId) {
+    public Comment findComment(@PathParam("id") Integer commentId) {
         return ejbComment.findComment(commentId);
+    }
+    
+    /**
+     * Finds and returns a list containing all the comments from the database.
+     *
+     * @return List of type Comment with all the comments found.
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public Set<Comment> findAllComments() {
+        return ejbComment.findAllComments();
     }
 }

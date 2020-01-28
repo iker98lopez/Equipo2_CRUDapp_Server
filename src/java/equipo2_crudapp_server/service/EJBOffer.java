@@ -1,7 +1,8 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Offer;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,11 +43,11 @@ public class EJBOffer implements EJBOfferInterface {
     /**
      * This function deletes an existing offer. It is found by the given ID.
      *
-     * @param offerId ID of the offer to be deleted.
+     * @param offer Offer to be deleted.
      */
     @Override
-    public void deleteOffer(Integer offerId) {
-        entityManager.remove(entityManager.merge(offerId));
+    public void deleteOffer(Offer offer) {
+        entityManager.remove(entityManager.merge(offer));
     }
 
     /**
@@ -66,7 +67,7 @@ public class EJBOffer implements EJBOfferInterface {
      * @return List of type Offer with all the offers in the database.
      */
     @Override
-    public List<Offer> findAllOffers() {
-        return entityManager.createNamedQuery("findAllOffers").getResultList();
+    public Set<Offer> findAllOffers() {
+        return new HashSet<Offer>(entityManager.createNamedQuery("findAllOffers").getResultList());
     }
 }

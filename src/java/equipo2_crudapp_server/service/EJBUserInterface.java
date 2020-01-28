@@ -6,10 +6,12 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.User;
+import java.util.Set;
 import javax.ejb.Local;
 
 /**
- *
+ * Interface implemented by EJBUser.
+ * 
  * @author Diego Corral
  */
 @Local
@@ -29,9 +31,9 @@ public interface EJBUserInterface {
     
     /**
      * Deletes an specified user
-     * @param userId Id of the user to delete
+     * @param user User to delete
      */
-    public void deleteUser(Integer userId);
+    public void deleteUser(User user);
     
     /**
      * Search for an specified user in the database
@@ -39,4 +41,28 @@ public interface EJBUserInterface {
      * @return The user found
      */
     public User findUser(Integer userId);
+
+    /**
+     * Method that searches for a user with the specified email
+     *
+     * @param email Email of the user to find
+     * @return The user found
+     */
+    public User findUserByEmail(String email);
+    
+    /**
+     * Finds and returns a list containing all the users from the database.
+     *
+     * @return List of type User with all the users found.
+     */
+    public Set<User> findAllUsers();
+    
+    /**
+     * Method to check the credentials of a user.
+     * 
+     * @param login Login of the user.
+     * @param password Password of the user.
+     * @return The user, if found.
+     */
+    public User checkUserPassword(String login, String password);
 }

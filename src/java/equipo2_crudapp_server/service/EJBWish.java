@@ -6,6 +6,8 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Wish;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,11 +48,11 @@ public class EJBWish implements EJBWishInterface {
     /**
      * This function deletes an existing wish. It is found by the given ID.
      * 
-     * @param wishId ID of the wish to be deleted.
+     * @param wish Wish to be deleted.
      */
     @Override
-    public void deleteWish(Integer wishId) {
-        entityManager.remove(entityManager.merge(wishId));
+    public void deleteWish(Wish wish) {
+        entityManager.remove(entityManager.merge(wish));
     }
 
     /**
@@ -62,5 +64,15 @@ public class EJBWish implements EJBWishInterface {
     @Override
     public Wish findWish(Integer id) {
         return entityManager.find(Wish.class, id);
+    }
+    
+    /**
+     * This function finds all wishes in the database and returns them.
+     *
+     * @return List of type Wish with all the wishes in the database.
+     */
+    @Override
+    public Set<Wish> findAllWishes() {
+        return new HashSet<Wish>(entityManager.createNamedQuery("findAllWishes").getResultList());
     }
 }

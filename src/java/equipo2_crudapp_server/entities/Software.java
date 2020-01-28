@@ -1,14 +1,19 @@
 package equipo2_crudapp_server.entities;
 
+import equipo2_crudapp_classes.enumerators.SoftwareType;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.Basic;
+import static javax.persistence.CascadeType.ALL;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -50,6 +55,7 @@ public class Software implements Serializable {
      * Name of the software.
      */
     @NotNull
+    @Column(unique = true)
     private String name;
 
     /**
@@ -65,7 +71,9 @@ public class Software implements Serializable {
     /**
      * Image of the software.
      */
-    private Blob image;
+    @Lob
+    @Basic(fetch=EAGER)
+    private byte[] image;
 
     /**
      * Release date of the software
@@ -82,8 +90,14 @@ public class Software implements Serializable {
     /**
      * List with the offers of the software.
      */
-    @OneToMany(mappedBy = "software")
-    private List<Offer> offers;
+    @OneToMany(mappedBy = "software", fetch = EAGER, cascade = ALL)
+    private Set<Offer> offers;
+
+    /**
+     * List of all the wishes this software is on
+     */
+    @OneToMany(mappedBy = "software", fetch=EAGER, cascade=ALL)
+    private Set<Wish> wishList;
 
     /**
      * Parent software. This attribute is only needed when the SoftwareType is
@@ -93,21 +107,21 @@ public class Software implements Serializable {
     private Software parentSoftware;
 
     /**
-     * @return the softwareId
+     * @return id of the software
      */
     public Integer getSoftwareId() {
         return softwareId;
     }
 
     /**
-     * @param softwareId the softwareId to set
+     * @param softwareId the id to set
      */
     public void setSoftwareId(Integer softwareId) {
         this.softwareId = softwareId;
     }
 
     /**
-     * @return the name
+     * @return name of the software
      */
     public String getName() {
         return name;
@@ -121,7 +135,7 @@ public class Software implements Serializable {
     }
 
     /**
-     * @return the publisher
+     * @return publisher of the software
      */
     public String getPublisher() {
         return publisher;
@@ -135,7 +149,7 @@ public class Software implements Serializable {
     }
 
     /**
-     * @return the description
+     * @return description of the software
      */
     public String getDescription() {
         return description;
@@ -149,7 +163,21 @@ public class Software implements Serializable {
     }
 
     /**
-     * @return the releaseDate
+     * @return image of the software
+     */
+    public byte[] getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    /**
+     * @return release date of the software
      */
     public Date getReleaseDate() {
         return releaseDate;
@@ -163,7 +191,7 @@ public class Software implements Serializable {
     }
 
     /**
-     * @return the softwareType
+     * @return type of the software
      */
     public SoftwareType getSoftwareType() {
         return softwareType;
@@ -177,22 +205,36 @@ public class Software implements Serializable {
     }
 
     /**
-     * @return the offers
+     * @return offers the software is in
      */
-    @XmlTransient
-    public List<Offer> getOffers() {
+    public Set<Offer> getOffers() {
         return offers;
     }
 
     /**
      * @param offers the offers to set
      */
-    public void setOffers(List<Offer> offers) {
+    public void setOffers(Set<Offer> offers) {
         this.offers = offers;
     }
 
     /**
-     * @return the parentSoftware
+     * @return wishes the software is in
+     */
+    @XmlTransient
+    public Set<Wish> getWishList() {
+        return wishList;
+    }
+
+    /**
+     * @param wishList the wishList to set
+     */
+    public void setWishList(Set<Wish> wishList) {
+        this.wishList = wishList;
+    }
+
+    /**
+     * @return parent software of the software
      */
     public Software getParentSoftware() {
         return parentSoftware;
@@ -204,24 +246,20 @@ public class Software implements Serializable {
     public void setParentSoftware(Software parentSoftware) {
         this.parentSoftware = parentSoftware;
     }
-
-    @Override
-    public String toString() {
-        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", image=" + image + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + ", offers=" + offers + ", parentSoftware=" + parentSoftware + '}';
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.softwareId);
-        hash = 29 * hash + Objects.hashCode(this.name);
-        hash = 29 * hash + Objects.hashCode(this.publisher);
-        hash = 29 * hash + Objects.hashCode(this.description);
-        hash = 29 * hash + Objects.hashCode(this.image);
-        hash = 29 * hash + Objects.hashCode(this.releaseDate);
-        hash = 29 * hash + Objects.hashCode(this.softwareType);
-        hash = 29 * hash + Objects.hashCode(this.offers);
-        hash = 29 * hash + Objects.hashCode(this.parentSoftware);
+        hash = 59 * hash + Objects.hashCode(this.softwareId);
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.publisher);
+        hash = 59 * hash + Objects.hashCode(this.description);
+        hash = 59 * hash + Objects.hashCode(this.image);
+        hash = 59 * hash + Objects.hashCode(this.releaseDate);
+        hash = 59 * hash + Objects.hashCode(this.softwareType);
+        hash = 59 * hash + Objects.hashCode(this.offers);
+        hash = 59 * hash + Objects.hashCode(this.wishList);
+        hash = 59 * hash + Objects.hashCode(this.parentSoftware);
         return hash;
     }
 
@@ -261,9 +299,17 @@ public class Software implements Serializable {
         if (!Objects.equals(this.offers, other.offers)) {
             return false;
         }
+        if (!Objects.equals(this.wishList, other.wishList)) {
+            return false;
+        }
         if (!Objects.equals(this.parentSoftware, other.parentSoftware)) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", image=" + image + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + ", offers=" + offers + ", wishList=" + wishList + ", parentSoftware=" + parentSoftware + '}';
     }
 }

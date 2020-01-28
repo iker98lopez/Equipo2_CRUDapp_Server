@@ -6,12 +6,15 @@
 package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Shop;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * Enterprise Java Bean that contains all the logic for the entity Shop.
+ * 
  * @author Diego Corral
  */
 @Stateless
@@ -44,8 +47,8 @@ public class EJBShop implements EJBShopInterface{
      * @param shopId Id of the shop to delete
      */
     @Override
-    public void deleteShop(Integer shopId) {
-        entityManager.remove(entityManager.merge(shopId));
+    public void deleteShop(Shop shop) {
+        entityManager.remove(entityManager.merge(shop));
     }
 
     /**
@@ -57,5 +60,14 @@ public class EJBShop implements EJBShopInterface{
     public Shop findShop(Integer id) {
         return entityManager.find(Shop.class, id);
     }
-    
+
+    /**
+     * This function finds all shops in the database and returns them.
+     *
+     * @return List of type Shop with all the shops in the database.
+     */
+    @Override
+    public Set<Shop> findAllShops() {
+        return new HashSet<Shop>(entityManager.createNamedQuery("findAllShops").getResultList());
+    }
 }
