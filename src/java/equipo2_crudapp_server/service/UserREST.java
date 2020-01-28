@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * RESTful service provider for the entity User.
@@ -50,12 +51,16 @@ public class UserREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public void createUser(User user) {
-        byte[] toHash = CipheringManager.decipherText(user.getPassword());
-        user.setPassword(CipheringManager.hashCipher(toHash));
+        byte[] password = DatatypeConverter.parseHexBinary(user.getPassword());
+        byte[] decipheredPassword = CipheringManager.decipherText(password);
+        String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
+        
+        user.setPassword(hashedPassword);
         user.setLastLogin(Date.valueOf(LocalDate.now()));
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
         user.setPrivilege(UserPrivilege.USER);
         user.setStatus(UserStatus.ENABLED);
+        
         ejbUser.createUser(user);
     }
 
@@ -69,9 +74,11 @@ public class UserREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyUser(@PathParam("id") Integer userId, User user) {
+        /*
         byte[] toHash = CipheringManager.decipherText(user.getPassword());
-        user.setPassword(CipheringManager.hashCipher(toHash));
+        user.setPassword(CipheringManager.hashCipher(new String (toHash)));
         ejbUser.modifyUser(user);
+        */
     }
 
     /**
@@ -84,10 +91,11 @@ public class UserREST {
     @Path("password/{password}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyPassword(@PathParam("password") String password, User user) {
-        byte[] toHash = CipheringManager.decipherText(user.getPassword());
+        /*
+        byte[] toHash = CipheringManager.decipherText((user.getPassword()));
         user.setPassword(CipheringManager.hashCipher(toHash));
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
-
+        */
         ejbUser.modifyUser(user);
     }
 
@@ -139,6 +147,7 @@ public class UserREST {
     @Path("credentials/{login}/{password}")
     @Produces({MediaType.APPLICATION_XML})
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
+        /*
         byte[] toHash = CipheringManager.decipherText(password);
         User user = ejbUser.checkUserPassword(login, CipheringManager.hashCipher(toHash));
 
@@ -146,8 +155,8 @@ public class UserREST {
             user.setLastLogin(Date.valueOf(LocalDate.now()));
             ejbUser.modifyUser(user);
         }
-
-        return user;
+        */
+        return new User();
     }
 
     /**

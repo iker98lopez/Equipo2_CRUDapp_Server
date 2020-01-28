@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.DatagramPacket;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
@@ -42,7 +43,7 @@ public class CipheringManager {
      * @param text byte array to be ciphered.
      * @return hashing of the text received as a string in hexadecimal.
      */
-    public static String hashCipher(byte[] text) {
+    public static byte[] hashCipher(byte[] text) {
 
         MessageDigest messageDigest;
         byte hash[] = null;
@@ -55,7 +56,7 @@ public class CipheringManager {
         } catch (NoSuchAlgorithmException exception) {
             LOGGER.warning("There was an error while ciphering. " + exception.getMessage());
         }
-        return byteToHex(hash);
+        return hash;
     }
 
     /**
@@ -65,16 +66,18 @@ public class CipheringManager {
      * @param text String to decipher.
      * @return deciphered String as byte array.
      */
-    public static byte[] decipherText(String text) {
+    public static byte[] decipherText(byte[] text) {
         byte[] decodedMessage = null;
         try {
-            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(fileReader("C:\\Users\\iker lopez carrillo\\Documents\\NetBeansProjects\\Equipo2_CRUDapp_Server\\src\\java\\equipo2_crudapp_server\\ciphering\\private.key"));
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            PrivateKey privateKey = keyFactory.generatePrivate(spec);
+            byte fileKey[] = fileReader("C:\\Users\\iker lopez carrillo\\Documents\\NetBeansProjects\\Equipo2_CRUDapp_Server\\src\\java\\equipo2_crudapp_server\\ciphering\\private.key");
 
-            Cipher cipher = Cipher.getInstance("RSA");
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(fileKey);
+            PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            decodedMessage = cipher.doFinal(hexToByte(text));
+            decodedMessage = cipher.doFinal(text);
         } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException exception) {
             LOGGER.warning("There was an error trying to decipher the text. " + exception.getClass() + " " + exception.getMessage());
         }
