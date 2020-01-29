@@ -65,7 +65,7 @@ public class Shop implements Serializable {
     @Basic(fetch=EAGER)
     private byte[] image;
 
-    @OneToMany (mappedBy = "shop", fetch = EAGER, cascade = ALL)
+    @OneToMany (mappedBy = "shopId", fetch = EAGER, cascade = ALL)
     private Set<Offer> offers;
     
     /**

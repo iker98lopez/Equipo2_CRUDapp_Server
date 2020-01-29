@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -58,7 +59,7 @@ public class Offer implements Serializable {
      */
     @NotNull
     @Temporal(TemporalType.DATE)
-    private Date expiringDate;
+    private Timestamp expiringDate;
 
     /**
      * Base price of the offer.
@@ -99,7 +100,7 @@ public class Offer implements Serializable {
     /**
      * Set of comments of the offer.
      */
-    @OneToMany(mappedBy = "offer", fetch = EAGER, cascade = ALL)
+    @OneToMany(mappedBy = "offerId", fetch = EAGER, cascade = ALL)
     private Set<Comment> comments;
 
     /**
@@ -140,7 +141,7 @@ public class Offer implements Serializable {
     /**
      * @param expiringDate the expiringDate to set
      */
-    public void setExpiringDate(Date expiringDate) {
+    public void setExpiringDate(Timestamp expiringDate) {
         this.expiringDate = expiringDate;
     }
 
