@@ -8,7 +8,6 @@ package equipo2_crudapp_server.entities;
 import equipo2_crudapp_classes.enumerators.UserPrivilege;
 import equipo2_crudapp_classes.enumerators.UserStatus;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -90,13 +89,13 @@ public class User implements Serializable {
      * The date of the las password change
      */
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp lastPasswordChange;
+    private Date lastPasswordChange;
 
     /**
      * The last time the user logged in
      */
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp lastLogin;
+    private Date lastLogin;
 
     /**
      * The privilege of the user. It can be USER or ADMIN
@@ -120,19 +119,19 @@ public class User implements Serializable {
     /**
      * A set with all the software wishes of the user
      */
-    @OneToMany(mappedBy = "userId", fetch = EAGER, cascade = ALL)
+    @OneToMany(mappedBy = "wishId", fetch = EAGER, cascade = ALL)
     private Set<Wish> wishList;
 
     /**
      * A list with all the comments of the user
      */
-    @OneToMany(mappedBy = "userId", fetch = EAGER, cascade = ALL)
+    @OneToMany(mappedBy = "commentId", fetch = EAGER, cascade = ALL)
     private Set<Comment> comments;
 
     /**
      * A list with all the offers of the user
      */
-    @OneToMany(mappedBy = "userId", fetch = EAGER, cascade = ALL)
+    @OneToMany(mappedBy = "offerId", fetch = EAGER, cascade = ALL)
     private Set<Offer> offers;
 
     /**
@@ -215,7 +214,7 @@ public class User implements Serializable {
     /**
      * @param lastPasswordChange the lastPasswordChange to set
      */
-    public void setLastPasswordChange(Timestamp lastPasswordChange) {
+    public void setLastPasswordChange(Date lastPasswordChange) {
         this.lastPasswordChange = lastPasswordChange;
     }
 
@@ -229,7 +228,7 @@ public class User implements Serializable {
     /**
      * @param lastLogin the lastLogin to set
      */
-    public void setLastLogin(Timestamp lastLogin) {
+    public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
     }
 

@@ -2,7 +2,6 @@ package equipo2_crudapp_server.entities;
 
 import equipo2_crudapp_classes.enumerators.SoftwareType;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -80,7 +79,7 @@ public class Software implements Serializable {
      * Release date of the software
      */
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp releaseDate;
+    private Date releaseDate;
 
     /**
      * Type of the software. It can be PROGRAM, GAME or EXTENSION
@@ -91,13 +90,13 @@ public class Software implements Serializable {
     /**
      * List with the offers of the software.
      */
-    @OneToMany(mappedBy = "softwareId", fetch = EAGER, cascade = ALL)
+    @OneToMany(mappedBy = "offerId", fetch = EAGER, cascade = ALL)
     private Set<Offer> offers;
 
     /**
      * List of all the wishes this software is on
      */
-    @OneToMany(mappedBy = "softwareId", fetch=EAGER, cascade=ALL)
+    @OneToMany(mappedBy = "wishId", fetch=EAGER, cascade=ALL)
     private Set<Wish> wishList;
 
     /**
@@ -187,7 +186,7 @@ public class Software implements Serializable {
     /**
      * @param releaseDate the releaseDate to set
      */
-    public void setReleaseDate(Timestamp releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 

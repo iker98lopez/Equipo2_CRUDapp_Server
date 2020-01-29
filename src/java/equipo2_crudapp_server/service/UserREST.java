@@ -12,9 +12,7 @@ import equipo2_crudapp_server.email.EmailSender;
 import equipo2_crudapp_server.entities.User;
 import java.security.SecureRandom;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -56,13 +54,13 @@ public class UserREST {
         byte[] password = DatatypeConverter.parseHexBinary(user.getPassword());
         byte[] decipheredPassword = CipheringManager.decipherText(password);
         String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
-        
+
         user.setPassword(hashedPassword);
-        user.setLastLogin(Timestamp.valueOf(LocalDateTime.now()));
-        user.setLastPasswordChange(Timestamp.valueOf(LocalDateTime.now()));
+        user.setLastLogin(Date.valueOf(LocalDate.now()));
+        user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
         user.setPrivilege(UserPrivilege.USER);
         user.setStatus(UserStatus.ENABLED);
-        
+
         ejbUser.createUser(user);
     }
 
@@ -76,11 +74,12 @@ public class UserREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyUser(@PathParam("id") Integer userId, User user) {
-        /*
-        byte[] toHash = CipheringManager.decipherText(user.getPassword());
-        user.setPassword(CipheringManager.hashCipher(new String (toHash)));
+        byte[] password = DatatypeConverter.parseHexBinary(user.getPassword());
+        byte[] decipheredPassword = CipheringManager.decipherText(password);
+        String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
+        user.setPassword(hashedPassword);
+
         ejbUser.modifyUser(user);
-        */
     }
 
     /**
@@ -92,12 +91,12 @@ public class UserREST {
     @PUT
     @Path("password/{password}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void modifyPassword(@PathParam("password") String password, User user) {
-        /*
-        byte[] toHash = CipheringManager.decipherText((user.getPassword()));
-        user.setPassword(CipheringManager.hashCipher(toHash));
+    public void modifyPassword(@PathParam("password") String newPassword, User user) {
+        byte[] decipheredPassword = CipheringManager.decipherText(DatatypeConverter.parseHexBinary(newPassword));
+        String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
+        user.setPassword(hashedPassword);
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
-        */
+
         ejbUser.modifyUser(user);
     }
 
@@ -149,16 +148,16 @@ public class UserREST {
     @Path("credentials/{login}/{password}")
     @Produces({MediaType.APPLICATION_XML})
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
-        /*
-        byte[] toHash = CipheringManager.decipherText(password);
-        User user = ejbUser.checkUserPassword(login, CipheringManager.hashCipher(toHash));
+        byte[] decipheredPassword = CipheringManager.decipherText(DatatypeConverter.parseHexBinary(password));
+        String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
+        User user = ejbUser.checkUserPassword(login, hashedPassword);
 
         if (user != null) {
             user.setLastLogin(Date.valueOf(LocalDate.now()));
             ejbUser.modifyUser(user);
         }
-        */
-        return new User();
+
+        return user;
     }
 
     /**
@@ -185,14 +184,14 @@ public class UserREST {
     @Produces({MediaType.TEXT_PLAIN})
     public String getRecoveryCode(@PathParam("email") String email) {
 
-        String recoveryCode = null;
+        String recoveryCode = "";
 
         if (this.findUserByEmail(email) != null) {
             SecureRandom random = new SecureRandom();
             String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
 
             for (int i = 0; i < 6; i++) {
-                recoveryCode += validChars.charAt(1 + random.nextInt(validChars.length()));
+                recoveryCode += validChars.charAt(random.nextInt(validChars.length()));
             }
 
             EmailSender emailSender = new EmailSender();
