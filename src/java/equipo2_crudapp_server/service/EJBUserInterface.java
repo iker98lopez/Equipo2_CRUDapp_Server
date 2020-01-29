@@ -65,4 +65,12 @@ public interface EJBUserInterface {
      * @return The user, if found.
      */
     public User checkUserPassword(String login, String password);
+    
+    /**
+     * Method that searches for a user with the specified login
+     *
+     * @param email Login of the user to find
+     * @return The user found
+     */
+    public User findUserByLogin(String login);
 }

@@ -22,6 +22,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * Class to manage the sending of emails to the users of the app.
@@ -50,7 +51,7 @@ public class EmailSender {
         this.smtp_host = DEFAULT_SMTP_HOST;
         this.smtp_port = DEFAULT_SMTP_PORT;
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\Users\\iker lopez carrillo\\Documents\\NetBeansProjects\\Equipo2_CRUDapp_Server\\src\\java\\equipo2_crudapp_server\\email\\credentials.dat")));
+        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
     /**
@@ -65,7 +66,7 @@ public class EmailSender {
         this.smtp_host = (host == null ? DEFAULT_SMTP_HOST : host);
         this.smtp_port = (port == null ? DEFAULT_SMTP_PORT : new Integer(port).intValue());
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\Users\\iker lopez carrillo\\Documents\\NetBeansProjects\\Equipo2_CRUDapp_Server\\src\\java\\equipo2_crudapp_server\\email\\credentials.dat")));
+        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
     /**
@@ -135,9 +136,9 @@ public class EmailSender {
      * @param tempPassword Temporary password for the account.
      */
     public void sendRecoveryMail(String receiver, String tempPassword) {
-        String message = "Your password has been reset. You can access your account using this temporal password: " + tempPassword;
+        String message = "This is the temporal code to access your account. Keep in mind that after closing the application this code will no longer be valid.\n <b>" + tempPassword + "</b>";
 
-        sendMail(receiver, "Password Reset", message);
+        sendMail(receiver, "Forgot your password?", message);
     }
 
     /**

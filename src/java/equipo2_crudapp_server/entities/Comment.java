@@ -51,7 +51,7 @@ public class Comment implements Serializable {
      * The user that has created the comment
      */
     @NotNull
-    @MapsId("userId")
+    //@MapsId("userId")
     @ManyToOne(fetch=EAGER)
     private User user;
     
@@ -59,7 +59,7 @@ public class Comment implements Serializable {
      * The offer to which the comments belong
      */
     @NotNull
-    @MapsId("offerId")
+    //@MapsId("offerId")
     @ManyToOne(fetch=EAGER)
     private Offer offer;
 

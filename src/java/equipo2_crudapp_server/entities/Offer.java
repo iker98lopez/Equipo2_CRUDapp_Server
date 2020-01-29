@@ -85,14 +85,14 @@ public class Offer implements Serializable {
     /**
      * Software offered in the offer.
      */
-    @MapsId("softwareId")
+    //@MapsId("softwareId")
     @ManyToOne(fetch = EAGER)
     private Software software;
 
     /**
      * Shop providing the offer.
      */
-    @MapsId("shopId")
+    //@MapsId("shopId")
     @ManyToOne(fetch = EAGER)
     private Shop shop;
 

@@ -39,13 +39,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "user", schema = "equipo2crudappdb")
 @NamedQueries({
     @NamedQuery(name = "findAllUsers",
-            query = "SELECT a FROM User a ORDER BY a.id DESC")
+            query = "SELECT a FROM User a ORDER BY a.userId DESC")
     ,
     @NamedQuery(name = "checkUserPassword",
             query = "SELECT a FROM User a WHERE a.login = :login AND a.password = :password")
     ,
     @NamedQuery(name = "findUserByEmail",
             query = "SELECT a FROM User a WHERE a.email = :email")
+    ,
+    @NamedQuery(name = "findUserByLogin",
+            query = "SELECT a FROM User a WHERE a.login = :login")
 })
 @XmlRootElement
 public class User implements Serializable {

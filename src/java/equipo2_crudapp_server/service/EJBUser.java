@@ -95,4 +95,15 @@ public class EJBUser implements EJBUserInterface {
     public User checkUserPassword(String login, String password) {
         return (User) entityManager.createNamedQuery("checkUserPassword").setParameter("login", login).setParameter("password", password).getSingleResult();
     }
+    
+    /**
+     * Method that searches for a user with the specified login
+     *
+     * @param login Login of the user to find
+     * @return The user found
+     */
+    @Override
+    public User findUserByLogin(String login) {
+        return (User) entityManager.createNamedQuery("findUserByLogin").setParameter("login", login).getSingleResult();
+    }
 }
