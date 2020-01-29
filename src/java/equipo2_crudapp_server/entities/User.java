@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     ,
     @NamedQuery(name = "findUserByEmail",
             query = "SELECT a FROM User a WHERE a.email = :email")
+    ,
+    @NamedQuery(name = "findUserByLogin",
+            query = "SELECT a FROM User a WHERE a.login = :login")
 })
 @XmlRootElement
 public class User implements Serializable {

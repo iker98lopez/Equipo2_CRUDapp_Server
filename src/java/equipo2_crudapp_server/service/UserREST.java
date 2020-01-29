@@ -74,11 +74,7 @@ public class UserREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyUser(@PathParam("id") Integer userId, User user) {
-        byte[] password = DatatypeConverter.parseHexBinary(user.getPassword());
-        byte[] decipheredPassword = CipheringManager.decipherText(password);
-        String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
-        user.setPassword(hashedPassword);
-
+        user.setPassword(ejbUser.findUser(userId).getPassword());
         ejbUser.modifyUser(user);
     }
 
@@ -121,9 +117,27 @@ public class UserREST {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
     public User findUser(@PathParam("id") Integer userId) {
-        return ejbUser.findUser(userId);
+        User user = ejbUser.findUser(userId);
+        user.setPassword(null);
+        return user;
     }
 
+    /**
+     * Method that searches for a user
+     *
+     * @param userId Id of the user to find
+     * @return The user found
+     */
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML})
+    public User findUserByLogin(@PathParam("login") String login) {
+        User user = ejbUser.findUserByLogin(login);
+        user.setPassword(null);
+        return user;
+    }
+
+    
     /**
      * Method that searches for a user with the specified email
      *
@@ -134,7 +148,9 @@ public class UserREST {
     @Path("email/{email}")
     @Produces({MediaType.APPLICATION_XML})
     public User findUserByEmail(@PathParam("email") String email) {
-        return ejbUser.findUserByEmail(email);
+        User user = ejbUser.findUserByEmail(email);
+        user.setPassword(null);
+        return user;
     }
 
     /**
@@ -150,11 +166,13 @@ public class UserREST {
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
         byte[] decipheredPassword = CipheringManager.decipherText(DatatypeConverter.parseHexBinary(password));
         String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
+        LOGGER.info(login + " "  + hashedPassword + " " + password);
         User user = ejbUser.checkUserPassword(login, hashedPassword);
 
         if (user != null) {
             user.setLastLogin(Date.valueOf(LocalDate.now()));
             ejbUser.modifyUser(user);
+            user.setPassword(null);
         }
 
         return user;
