@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "user", schema = "equipo2crudappdb")
 @NamedQueries({
     @NamedQuery(name = "findAllUsers",
-            query = "SELECT a FROM User a ORDER BY a.id DESC")
+            query = "SELECT a FROM User a ORDER BY a.userId DESC")
     ,
     @NamedQuery(name = "checkUserPassword",
             query = "SELECT a FROM User a WHERE a.login = :login AND a.password = :password")

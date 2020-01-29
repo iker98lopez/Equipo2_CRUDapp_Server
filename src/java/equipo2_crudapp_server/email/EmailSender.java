@@ -22,6 +22,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * Class to manage the sending of emails to the users of the app.
@@ -50,7 +51,7 @@ public class EmailSender {
         this.smtp_host = DEFAULT_SMTP_HOST;
         this.smtp_port = DEFAULT_SMTP_PORT;
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\private.key")));
+        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
     /**
@@ -65,7 +66,7 @@ public class EmailSender {
         this.smtp_host = (host == null ? DEFAULT_SMTP_HOST : host);
         this.smtp_port = (port == null ? DEFAULT_SMTP_PORT : new Integer(port).intValue());
 
-        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\private.key")));
+        this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
     /**
