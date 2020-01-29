@@ -43,14 +43,14 @@ public class Wish implements Serializable {
     /**
      * The software in the wish
      */
-    @MapsId("softwareId")
+    //@MapsId("softwareId")
     @ManyToOne(fetch = EAGER)
     private Software software;
 
     /**
      * User owner of the wish
      */
-    @MapsId("userId")
+    //@MapsId("userId")
     @ManyToOne(fetch = EAGER)
     private User user;
 

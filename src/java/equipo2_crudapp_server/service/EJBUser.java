@@ -99,9 +99,10 @@ public class EJBUser implements EJBUserInterface {
     /**
      * Method that searches for a user with the specified login
      *
-     * @param email Login of the user to find
+     * @param login Login of the user to find
      * @return The user found
      */
+    @Override
     public User findUserByLogin(String login) {
         return (User) entityManager.createNamedQuery("findUserByLogin").setParameter("login", login).getSingleResult();
     }

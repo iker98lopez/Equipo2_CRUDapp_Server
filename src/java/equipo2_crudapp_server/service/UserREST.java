@@ -129,7 +129,7 @@ public class UserREST {
      * @return The user found
      */
     @GET
-    @Path("{id}")
+    @Path("login/{login}")
     @Produces({MediaType.APPLICATION_XML})
     public User findUserByLogin(@PathParam("login") String login) {
         User user = ejbUser.findUserByLogin(login);
