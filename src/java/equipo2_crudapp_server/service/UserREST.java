@@ -16,9 +16,11 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -132,9 +134,13 @@ public class UserREST {
     @Path("login/{login}")
     @Produces({MediaType.APPLICATION_XML})
     public User findUserByLogin(@PathParam("login") String login) {
-        User user = ejbUser.findUserByLogin(login);
-        user.setPassword(null);
-        return user;
+        try{
+            User user = ejbUser.findUserByLogin(login);
+            user.setPassword(null);
+            return user;
+        } catch (NoResultException exception) {
+            throw new NotFoundException(exception.getMessage());
+        }
     }
 
     
@@ -166,7 +172,6 @@ public class UserREST {
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
         byte[] decipheredPassword = CipheringManager.decipherText(DatatypeConverter.parseHexBinary(password));
         String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
-        LOGGER.info(login + " "  + hashedPassword + " " + password);
         User user = ejbUser.checkUserPassword(login, hashedPassword);
 
         if (user != null) {

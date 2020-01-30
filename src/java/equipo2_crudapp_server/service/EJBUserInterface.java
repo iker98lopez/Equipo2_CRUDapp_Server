@@ -69,7 +69,7 @@ public interface EJBUserInterface {
     /**
      * Method that searches for a user with the specified login
      *
-     * @param email Login of the user to find
+     * @param login Login of the user to find
      * @return The user found
      */
     public User findUserByLogin(String login);
