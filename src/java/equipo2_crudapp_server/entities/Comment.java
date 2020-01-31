@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "comment", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllComments",
-            query = "SELECT a FROM Comment a ORDER BY a.id DESC")
+        query = "SELECT a FROM Comment a ORDER BY a.id DESC")
 @XmlRootElement
 public class Comment implements Serializable {
 
@@ -52,15 +51,15 @@ public class Comment implements Serializable {
      */
     @NotNull
     //@MapsId("userId")
-    @ManyToOne(fetch=EAGER)
+    @ManyToOne(fetch = EAGER)
     private User user;
-    
+
     /**
      * The offer to which the comments belong
      */
     @NotNull
     //@MapsId("offerId")
-    @ManyToOne(fetch=EAGER)
+    @ManyToOne(fetch = EAGER)
     private Offer offer;
 
     /**
@@ -115,7 +114,7 @@ public class Comment implements Serializable {
     }
 
     /**
-     * 
+     *
      * @param offer the offer to set
      */
     public void setOffer(Offer offer) {
@@ -159,5 +158,4 @@ public class Comment implements Serializable {
         return true;
     }
 
-   
 }

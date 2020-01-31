@@ -14,17 +14,18 @@ import javax.persistence.PersistenceContext;
 
 /**
  * Enterprise Java Bean that contains all the logic for the entity Shop.
- * 
+ *
  * @author Diego Corral
  */
 @Stateless
-public class EJBShop implements EJBShopInterface{
+public class EJBShop implements EJBShopInterface {
 
     @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
     private EntityManager entityManager;
 
     /**
      * Creates a new shop in the database
+     *
      * @param shop Shop to create
      */
     @Override
@@ -34,6 +35,7 @@ public class EJBShop implements EJBShopInterface{
 
     /**
      * Updates an existing user in the database
+     *
      * @param shop Shop that is going to be modified with the new values
      */
     @Override
@@ -44,6 +46,7 @@ public class EJBShop implements EJBShopInterface{
 
     /**
      * Deletes an specified shop
+     *
      * @param shopId Id of the shop to delete
      */
     @Override
@@ -53,6 +56,7 @@ public class EJBShop implements EJBShopInterface{
 
     /**
      * Search for an specified shop in the database
+     *
      * @param id Id of the shop to search
      * @return The shop found
      */

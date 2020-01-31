@@ -14,18 +14,18 @@ import javax.persistence.PersistenceContext;
 
 /**
  * Enterprise Java Bean that contains all the logic for the entity Comment.
- * 
+ *
  * @author Adrián García
  */
 @Stateless
 public class EJBComment implements EJBCommentInterface {
-    
+
     @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
     private EntityManager entityManager;
 
     /**
      * This function creates a new entry in the database with the given comment.
-     * 
+     *
      * @param comment New comment to be added.
      */
     @Override
@@ -34,9 +34,9 @@ public class EJBComment implements EJBCommentInterface {
     }
 
     /**
-     * This function updates an existing comment with the data from the given 
+     * This function updates an existing comment with the data from the given
      * comment.
-     * 
+     *
      * @param comment Comment with the modifications.
      */
     @Override
@@ -47,7 +47,7 @@ public class EJBComment implements EJBCommentInterface {
 
     /**
      * This function deletes an existing comment. It is found by the given ID.
-     * 
+     *
      * @param comment Comment to be deleted.
      */
     @Override
@@ -57,7 +57,7 @@ public class EJBComment implements EJBCommentInterface {
 
     /**
      * This function finds a comment by the id it receives and returns it.
-     * 
+     *
      * @param id ID of the comment.
      * @return Comment, if found.
      */
@@ -65,7 +65,7 @@ public class EJBComment implements EJBCommentInterface {
     public Comment findComment(Integer id) {
         return entityManager.find(Comment.class, id);
     }
-    
+
     /**
      * This function finds all comments in the database and returns them.
      *

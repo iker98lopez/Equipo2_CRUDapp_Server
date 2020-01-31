@@ -11,32 +11,36 @@ import javax.ejb.Local;
 
 /**
  * Interface implemented by EJBShop.
- * 
+ *
  * @author Diego Corral
  */
 @Local
 public interface EJBShopInterface {
-    
+
     /**
      * Creates a new shop in the database
+     *
      * @param shop Shop to create
      */
     public void createShop(Shop shop);
 
     /**
      * Updates an existing user in the database
+     *
      * @param shop Shop that is going to be modified with the new values
      */
     public void modifyShop(Shop shop);
 
     /**
      * Deletes an specified shop
+     *
      * @param shop Shop to delete
      */
     public void deleteShop(Shop shop);
 
     /**
      * Search for an specified shop in the database
+     *
      * @param shopId Id of the shop to search
      * @return The shop found
      */

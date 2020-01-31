@@ -6,7 +6,7 @@ import javax.ejb.Local;
 
 /**
  * Interface implemented by EJBSoftware.
- * 
+ *
  * @author iker lopez carrillo
  */
 @Local

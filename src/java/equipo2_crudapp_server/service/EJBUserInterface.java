@@ -11,32 +11,36 @@ import javax.ejb.Local;
 
 /**
  * Interface implemented by EJBUser.
- * 
+ *
  * @author Diego Corral
  */
 @Local
 public interface EJBUserInterface {
-    
+
     /**
      * Creates a new user in the database
+     *
      * @param user User to create
      */
     public void createUser(User user);
-    
+
     /**
      * Updates an existing user in the database
+     *
      * @param user User that is going to be modified with the new values
      */
     public void modifyUser(User user);
-    
+
     /**
      * Deletes an specified user
+     *
      * @param user User to delete
      */
     public void deleteUser(User user);
-    
+
     /**
      * Search for an specified user in the database
+     *
      * @param userId Id of the user to search
      * @return The user found
      */
@@ -49,23 +53,23 @@ public interface EJBUserInterface {
      * @return The user found
      */
     public User findUserByEmail(String email);
-    
+
     /**
      * Finds and returns a list containing all the users from the database.
      *
      * @return List of type User with all the users found.
      */
     public Set<User> findAllUsers();
-    
+
     /**
      * Method to check the credentials of a user.
-     * 
+     *
      * @param login Login of the user.
      * @param password Password of the user.
      * @return The user, if found.
      */
     public User checkUserPassword(String login, String password);
-    
+
     /**
      * Method that searches for a user with the specified login
      *

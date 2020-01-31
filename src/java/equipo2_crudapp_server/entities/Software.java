@@ -72,7 +72,7 @@ public class Software implements Serializable {
      * Image of the software.
      */
     @Lob
-    @Basic(fetch=EAGER)
+    @Basic(fetch = EAGER)
     private byte[] image;
 
     /**
@@ -96,7 +96,7 @@ public class Software implements Serializable {
     /**
      * List of all the wishes this software is on
      */
-    @OneToMany(mappedBy = "software", fetch=EAGER, cascade=ALL)
+    @OneToMany(mappedBy = "software", fetch = EAGER, cascade = ALL)
     private Set<Wish> wishList;
 
     /**
@@ -246,7 +246,7 @@ public class Software implements Serializable {
     public void setParentSoftware(Software parentSoftware) {
         this.parentSoftware = parentSoftware;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;

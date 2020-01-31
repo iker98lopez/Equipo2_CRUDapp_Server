@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  * Interface implemented by EJBComment.
- * 
+ *
  * @author Adrián García
  */
 @Local
@@ -19,28 +19,29 @@ public interface EJBCommentInterface {
 
     /**
      * This function creates a new entry in the database with the given comment.
-     * 
+     *
      * @param comment New comment to be added.
      */
     public void createComment(Comment comment);
 
     /**
-     * This function updates an existing comment with the data from the given comment.
-     * 
+     * This function updates an existing comment with the data from the given
+     * comment.
+     *
      * @param comment Wish with the modifications.
      */
     public void modifyComment(Comment comment);
 
     /**
      * This function deletes an existing comment. It is found by the given ID.
-     * 
+     *
      * @param comment Comment to be deleted.
      */
     public void deleteComment(Comment comment);
 
     /**
      * This function finds a comment by the id it receives and returns it.
-     * 
+     *
      * @param id ID of the comment
      * @return Comment, if found.
      */

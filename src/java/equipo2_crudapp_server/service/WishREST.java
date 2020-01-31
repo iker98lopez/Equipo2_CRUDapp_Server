@@ -20,12 +20,12 @@ import javax.ws.rs.core.MediaType;
 
 /**
  * RESTful service provider for the entity Wish.
- * 
+ *
  * @author Adrián García
  */
 @Path("wish")
 public class WishREST {
-    
+
     /**
      * Enterprise Java Beans for the entity wish
      */
@@ -34,6 +34,7 @@ public class WishREST {
 
     /**
      * Method that inserts a wish in the database
+     *
      * @param wish The wish that is going to be inserted
      */
     @POST
@@ -44,6 +45,7 @@ public class WishREST {
 
     /**
      * Method that modifies a wish in the database
+     *
      * @param wishId Id of the wish
      * @param wish The wish that is going to be modified and its new values
      */
@@ -53,9 +55,10 @@ public class WishREST {
     public void modifyWish(@PathParam("id") Integer wishId, Wish wish) {
         ejbWish.modifyWish(wish);
     }
-    
+
     /**
      * Method that deletes a wish from the database
+     *
      * @param wishId Id of the wish to delete
      */
     @DELETE
@@ -66,6 +69,7 @@ public class WishREST {
 
     /**
      * Method that finds a wish
+     *
      * @param wishId Id of the wish to search
      * @return The found wish
      */
@@ -75,7 +79,7 @@ public class WishREST {
     public Wish findWish(@PathParam("id") Integer wishId) {
         return ejbWish.findWish(wishId);
     }
-        
+
     /**
      * Finds and returns a list containing all the wishes from the database.
      *

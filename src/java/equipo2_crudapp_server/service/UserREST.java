@@ -134,7 +134,7 @@ public class UserREST {
     @Path("login/{login}")
     @Produces({MediaType.APPLICATION_XML})
     public User findUserByLogin(@PathParam("login") String login) {
-        try{
+        try {
             User user = ejbUser.findUserByLogin(login);
             user.setPassword(null);
             return user;
@@ -143,7 +143,6 @@ public class UserREST {
         }
     }
 
-    
     /**
      * Method that searches for a user with the specified email
      *

@@ -14,18 +14,18 @@ import javax.persistence.PersistenceContext;
 
 /**
  * Enterprise Java Bean that contains all the logic for the entity Wish.
- * 
+ *
  * @author Adrián García
  */
 @Stateless
 public class EJBWish implements EJBWishInterface {
-    
+
     @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
     private EntityManager entityManager;
 
     /**
      * This function creates a new entry in the database with the given wish.
-     * 
+     *
      * @param wish New wish to be added.
      */
     @Override
@@ -34,9 +34,8 @@ public class EJBWish implements EJBWishInterface {
     }
 
     /**
-     * This function updates an existing wish with the data from the given 
-     * wish.
-     * 
+     * This function updates an existing wish with the data from the given wish.
+     *
      * @param wish Wish with the modifications.
      */
     @Override
@@ -47,7 +46,7 @@ public class EJBWish implements EJBWishInterface {
 
     /**
      * This function deletes an existing wish. It is found by the given ID.
-     * 
+     *
      * @param wish Wish to be deleted.
      */
     @Override
@@ -57,7 +56,7 @@ public class EJBWish implements EJBWishInterface {
 
     /**
      * This function finds a wish by the id it receives and returns it.
-     * 
+     *
      * @param id ID of the wish.
      * @return Wish, if found.
      */
@@ -65,7 +64,7 @@ public class EJBWish implements EJBWishInterface {
     public Wish findWish(Integer id) {
         return entityManager.find(Wish.class, id);
     }
-    
+
     /**
      * This function finds all wishes in the database and returns them.
      *

@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "shop", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllShops",
-            query = "SELECT a FROM Shop a ORDER BY a.id DESC")
+        query = "SELECT a FROM Shop a ORDER BY a.id DESC")
 @XmlRootElement
 public class Shop implements Serializable {
 
@@ -62,12 +62,12 @@ public class Shop implements Serializable {
      * Image or logo of the shop.
      */
     @Lob
-    @Basic(fetch=EAGER)
+    @Basic(fetch = EAGER)
     private byte[] image;
 
-    @OneToMany (mappedBy = "shop", fetch = EAGER, cascade = ALL)
+    @OneToMany(mappedBy = "shop", fetch = EAGER, cascade = ALL)
     private Set<Offer> offers;
-    
+
     /**
      * @return the shopId
      */

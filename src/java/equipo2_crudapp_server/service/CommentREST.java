@@ -20,12 +20,12 @@ import javax.ws.rs.core.MediaType;
 
 /**
  * RESTful service provider for the entity Comment.
- * 
+ *
  * @author Adrián García
  */
 @Path("Comment")
 public class CommentREST {
-    
+
     /**
      * Enterprise Java Beans for the entity comment
      */
@@ -34,6 +34,7 @@ public class CommentREST {
 
     /**
      * Method that inserts a comment in the database
+     *
      * @param comment The comment that is going to be inserted
      */
     @POST
@@ -44,8 +45,10 @@ public class CommentREST {
 
     /**
      * Method that modifies a comment in the database
+     *
      * @param commentId Id of the comment
-     * @param comment the comment that is going to be modified and its new values
+     * @param comment the comment that is going to be modified and its new
+     * values
      */
     @PUT
     @Path("{id}")
@@ -53,9 +56,10 @@ public class CommentREST {
     public void modifyComment(@PathParam("id") Integer commentId, Comment comment) {
         ejbComment.modifyComment(comment);
     }
-    
+
     /**
      * Method that deletes a comment from the database
+     *
      * @param commentId Id of the comment to delete
      */
     @DELETE
@@ -66,6 +70,7 @@ public class CommentREST {
 
     /**
      * Method that finds a comment
+     *
      * @param commentId Id of the comment to search
      * @return The found comment
      */
@@ -75,7 +80,7 @@ public class CommentREST {
     public Comment findComment(@PathParam("id") Integer commentId) {
         return ejbComment.findComment(commentId);
     }
-    
+
     /**
      * Finds and returns a list containing all the comments from the database.
      *

@@ -20,12 +20,12 @@ import javax.ws.rs.core.MediaType;
 
 /**
  * RESTful service provider for the entity Shop.
- * 
+ *
  * @author Diego Corral
  */
 @Path("shop")
 public class ShopREST {
-    
+
     /**
      * Enterprise Java Beans for the entity User
      */
@@ -34,6 +34,7 @@ public class ShopREST {
 
     /**
      * Method that inserts a shop in the database
+     *
      * @param shop The shop that is going to be inserted
      */
     @POST
@@ -44,6 +45,7 @@ public class ShopREST {
 
     /**
      * Method that modifies a shop in the database
+     *
      * @param shopId Id of the shop
      * @param shop The shop that is going to be modified and its new values
      */
@@ -53,9 +55,10 @@ public class ShopREST {
     public void modifyShop(@PathParam("id") Integer shopId, Shop shop) {
         ejbShop.modifyShop(shop);
     }
-    
+
     /**
      * Method that deletes a shop from the database
+     *
      * @param shop Shop to delete
      */
     @DELETE
@@ -65,7 +68,8 @@ public class ShopREST {
     }
 
     /**
-     * Method that finds a shop 
+     * Method that finds a shop
+     *
      * @param shopId Id of the shop to search
      * @return The found shop
      */
@@ -75,7 +79,7 @@ public class ShopREST {
     public Shop findShop(@PathParam("id") Integer shopId) {
         return ejbShop.findShop(shopId);
     }
-    
+
     /**
      * Finds and returns a list containing all the shops from the database.
      *
