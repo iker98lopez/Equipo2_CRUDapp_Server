@@ -70,6 +70,7 @@ public class EJBUser implements EJBUserInterface {
      * @param email Email of the user to find
      * @return The user found
      */
+    @Override
     public User findUserByEmail(String email) {
         return (User) entityManager.createNamedQuery("findUserByEmail").setParameter("email", email).getSingleResult();
     }
@@ -81,7 +82,7 @@ public class EJBUser implements EJBUserInterface {
      */
     @Override
     public Set<User> findAllUsers() {
-        return new HashSet<User>(entityManager.createNamedQuery("findAllUsers").getResultList());
+        return new HashSet<>(entityManager.createNamedQuery("findAllUsers").getResultList());
     }
 
     /**

@@ -83,8 +83,8 @@ public class UserREST {
     /**
      * Method that modifies the password of the specified user
      *
-     * @param password New password for the user
-     * @param user User to change
+     * @param newPassword new password for the user
+     * @param user User to change their password
      */
     @PUT
     @Path("password/{password}")
@@ -127,7 +127,7 @@ public class UserREST {
     /**
      * Method that searches for a user
      *
-     * @param userId Id of the user to find
+     * @param login Login of the user to find
      * @return The user found
      */
     @GET
