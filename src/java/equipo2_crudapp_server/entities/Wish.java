@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "wish", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllWishes",
-        query = "SELECT a FROM Wish a ORDER BY a.id DESC")
+        query = "SELECT a FROM Wish a ORDER BY a.wishId DESC")
 @XmlRootElement
 public class Wish implements Serializable {
 
@@ -43,14 +42,12 @@ public class Wish implements Serializable {
     /**
      * The software in the wish
      */
-    //@MapsId("softwareId")
     @ManyToOne(fetch = EAGER)
     private Software software;
 
     /**
      * User owner of the wish
      */
-    //@MapsId("userId")
     @ManyToOne(fetch = EAGER)
     private User user;
 
@@ -100,9 +97,7 @@ public class Wish implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.wishId);
-        hash = 67 * hash + Objects.hashCode(this.software);
-        hash = 67 * hash + Objects.hashCode(this.user);
+        hash = 37 * hash + Objects.hashCode(this.wishId);
         return hash;
     }
 

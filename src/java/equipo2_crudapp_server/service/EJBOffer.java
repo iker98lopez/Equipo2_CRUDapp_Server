@@ -68,6 +68,6 @@ public class EJBOffer implements EJBOfferInterface {
      */
     @Override
     public Set<Offer> findAllOffers() {
-        return new HashSet<Offer>(entityManager.createNamedQuery("findAllOffers").getResultList());
+        return new HashSet<>(entityManager.createNamedQuery("findAllOffers").getResultList());
     }
 }

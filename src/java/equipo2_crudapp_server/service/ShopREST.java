@@ -59,9 +59,9 @@ public class ShopREST {
      * @param shop Shop to delete
      */
     @DELETE
-    @Path("{id}")
-    public void removeShop(@PathParam("id") Integer shopId) {
-        ejbShop.deleteShop(ejbShop.findShop(shopId));
+    @Path("{shop}")
+    public void removeShop(@PathParam("shop") Shop shop) {
+        ejbShop.deleteShop(shop);
     }
 
     /**

@@ -136,9 +136,9 @@ public class EmailSender {
      * @param tempPassword Temporary password for the account.
      */
     public void sendRecoveryMail(String receiver, String tempPassword) {
-        String message = "This is the temporal code to access your account. Keep in mind that after closing the application this code will no longer be valid.\n <b>" + tempPassword + "</b>";
+        String message = "Your password has been reset. You can access your account using this temporal password: " + tempPassword;
 
-        sendMail(receiver, "Forgot your password?", message);
+        sendMail(receiver, "Password Reset", message);
     }
 
     /**

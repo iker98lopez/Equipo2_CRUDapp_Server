@@ -69,7 +69,7 @@ public class EJBSoftware implements EJBSoftwareInterface {
      */
     @Override
     public Set<Software> findAllSoftwares() {
-        return new HashSet<Software>(entityManager.createNamedQuery("findAllSoftwares").getResultList());
+        return new HashSet<>(entityManager.createNamedQuery("findAllSoftwares").getResultList());
     }
 
     /**
@@ -81,6 +81,6 @@ public class EJBSoftware implements EJBSoftwareInterface {
      */
     @Override
     public Set<Software> findSoftwaresByName(String name) {
-        return (Set) entityManager.createNamedQuery("findSoftwaresByName").setParameter("name", name).getResultList();
+        return new HashSet<>(entityManager.createNamedQuery("findSoftwaresByName").setParameter("name", name).getResultList());
     }
 }

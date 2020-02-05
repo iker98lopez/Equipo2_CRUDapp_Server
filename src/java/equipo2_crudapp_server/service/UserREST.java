@@ -99,12 +99,12 @@ public class UserREST {
     /**
      * Method that deletes a user from the database
      *
-     * @param userId Id of the user that is going to be deleted
+     * @param user user to delete
      */
     @DELETE
-    @Path("{id}")
-    public void deleteUser(@PathParam("id") Integer userId) {
-        ejbUser.deleteUser(ejbUser.findUser(userId));
+    @Path("{user}")
+    public void deleteUser(@PathParam("user") User user) {
+        ejbUser.deleteUser(user);
     }
 
     /**

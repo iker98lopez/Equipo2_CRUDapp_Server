@@ -54,12 +54,12 @@ public class SoftwareREST {
     /**
      * Deletes a software from the database.
      *
-     * @param id ID of the software to delete.
+     * @param software software to delete.
      */
     @DELETE
-    @Path("{id}")
-    public void removeSoftware(@PathParam("id") Integer id) {
-        ejbSoftware.deleteSoftware(ejbSoftware.findSoftware(id));
+    @Path("{software}")
+    public void removeSoftware(@PathParam("software") Software software) {
+        ejbSoftware.deleteSoftware(software);
     }
 
     /**
