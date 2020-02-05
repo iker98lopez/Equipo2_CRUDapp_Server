@@ -159,10 +159,7 @@ public class Shop implements Serializable {
         if (!Objects.equals(this.shopId, other.shopId)) {
             return false;
         }
-        if (!Objects.equals(this.image, other.image)) {
-            return false;
-        }
-        if (!Objects.equals(this.offers, other.offers)) {
+        if (!Arrays.equals(this.image, other.image)) {
             return false;
         }
         return true;
@@ -170,6 +167,6 @@ public class Shop implements Serializable {
 
     @Override
     public String toString() {
-        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + ", image=" + image + ", offers=" + offers + '}';
+        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + ", image=" + image + '}';
     }
 }

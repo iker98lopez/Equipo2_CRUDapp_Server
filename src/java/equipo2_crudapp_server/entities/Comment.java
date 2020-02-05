@@ -145,14 +145,11 @@ public class Comment implements Serializable {
         if (!Objects.equals(this.commentId, other.commentId)) {
             return false;
         }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
-        if (!Objects.equals(this.offer, other.offer)) {
-            return false;
-        }
         return true;
     }
 
-   
+    @Override
+    public String toString() {
+        return "Comment{" + "commentId=" + commentId + ", comment=" + comment + '}';
+    }
 }

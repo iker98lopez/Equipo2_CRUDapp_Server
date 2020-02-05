@@ -116,17 +116,11 @@ public class Wish implements Serializable {
         if (!Objects.equals(this.wishId, other.wishId)) {
             return false;
         }
-        if (!Objects.equals(this.software, other.software)) {
-            return false;
-        }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Wish{" + "wishId=" + wishId + ", software=" + software + ", user=" + user + '}';
+        return "Wish{" + "wishId=" + wishId + '}';
     }
 }

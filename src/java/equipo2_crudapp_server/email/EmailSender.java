@@ -32,7 +32,7 @@ public class EmailSender {
 
     private static final Logger LOGGER = Logger.getLogger("pspcifrado.email.Email");
 
-    private static final String sender = "noreply.ofertapps";
+    private String sender;
     private String password;
 
     private String smtp_host = null;
@@ -50,6 +50,7 @@ public class EmailSender {
         this.smtp_host = DEFAULT_SMTP_HOST;
         this.smtp_port = DEFAULT_SMTP_PORT;
 
+        this.sender = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\sender.dat")));
         this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
@@ -65,6 +66,7 @@ public class EmailSender {
         this.smtp_host = (host == null ? DEFAULT_SMTP_HOST : host);
         this.smtp_port = (port == null ? DEFAULT_SMTP_PORT : new Integer(port).intValue());
 
+        this.sender = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\sender.dat")));
         this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
@@ -76,6 +78,7 @@ public class EmailSender {
      * @param text Text of the mail.
      */
     private void sendMail(String receiver, String subject, String text) {
+        LOGGER.info(sender);
         try {
             Properties properties = new Properties();
             properties.put("mail.smtp.auth", true);

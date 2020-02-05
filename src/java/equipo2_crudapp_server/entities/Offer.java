@@ -242,11 +242,6 @@ public class Offer implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Offer{" + "offerId=" + offerId + ", url=" + url + ", expiringDate=" + expiringDate + ", basePrice=" + basePrice + ", dicountedPrice=" + dicountedPrice + ", discount=" + discount + ", user=" + user + ", software=" + software + ", shop=" + shop + ", comments=" + comments + '}';
-    }
-
-    @Override
     public int hashCode() {
         int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.offerId);
@@ -288,18 +283,11 @@ public class Offer implements Serializable {
         if (!Objects.equals(this.discount, other.discount)) {
             return false;
         }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
-        if (!Objects.equals(this.software, other.software)) {
-            return false;
-        }
-        if (!Objects.equals(this.shop, other.shop)) {
-            return false;
-        }
-        if (!Objects.equals(this.comments, other.comments)) {
-            return false;
-        }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" + "offerId=" + offerId + ", url=" + url + ", expiringDate=" + expiringDate + ", basePrice=" + basePrice + ", dicountedPrice=" + dicountedPrice + ", discount=" + discount + '}';
     }
 }

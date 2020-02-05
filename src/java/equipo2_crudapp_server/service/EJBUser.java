@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.NotFoundException;
 
 /**
  * Enterprise Java Bean that contains all the logic for the entity User.
@@ -39,7 +40,7 @@ public class EJBUser implements EJBUserInterface {
      * @param user User that is going to be modified with the new values
      */
     @Override
-    public void modifyUser(User user) {
+    public void modifyUser(User user){
         entityManager.merge(user);
     }
 

@@ -88,6 +88,8 @@ public class UserREST {
     @Path("password/{password}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyPassword(@PathParam("password") String newPassword, User user) {
+        user = ejbUser.findUserByLogin(user.getLogin());
+        
         byte[] decipheredPassword = CipheringManager.decipherText(DatatypeConverter.parseHexBinary(newPassword));
         String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
         user.setPassword(hashedPassword);
@@ -215,7 +217,16 @@ public class UserREST {
             EmailSender emailSender = new EmailSender();
             emailSender.sendRecoveryMail(email, recoveryCode);
         }
+        
+        
+        String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(recoveryCode.getBytes()));
 
+        User user = ejbUser.findUserByEmail(email);
+        user.setPassword(hashedPassword);
+        user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
+        
+        ejbUser.modifyUser(user);
+        
         return recoveryCode;
     }
 }

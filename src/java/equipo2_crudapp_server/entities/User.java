@@ -363,16 +363,7 @@ public class User implements Serializable {
         if (this.status != other.status) {
             return false;
         }
-        if (!Objects.equals(this.image, other.image)) {
-            return false;
-        }
-        if (!Objects.equals(this.wishList, other.wishList)) {
-            return false;
-        }
-        if (!Objects.equals(this.comments, other.comments)) {
-            return false;
-        }
-        if (!Objects.equals(this.offers, other.offers)) {
+        if (!Arrays.equals(this.image, other.image)) {
             return false;
         }
         return true;
@@ -380,6 +371,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", image=" + image + ", wishList=" + wishList + ", comments=" + comments + ", offers=" + offers + '}';
+        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", image=" + image + '}';
     }
 }

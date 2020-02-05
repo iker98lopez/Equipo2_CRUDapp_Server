@@ -285,7 +285,7 @@ public class Software implements Serializable {
         if (!Objects.equals(this.softwareId, other.softwareId)) {
             return false;
         }
-        if (!Objects.equals(this.image, other.image)) {
+        if (!Arrays.equals(this.image, other.image)) {
             return false;
         }
         if (!Objects.equals(this.releaseDate, other.releaseDate)) {
@@ -294,20 +294,11 @@ public class Software implements Serializable {
         if (this.softwareType != other.softwareType) {
             return false;
         }
-        if (!Objects.equals(this.offers, other.offers)) {
-            return false;
-        }
-        if (!Objects.equals(this.wishList, other.wishList)) {
-            return false;
-        }
-        if (!Objects.equals(this.parentSoftware, other.parentSoftware)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", image=" + image + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + ", offers=" + offers + ", wishList=" + wishList + ", parentSoftware=" + parentSoftware + '}';
+        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", image=" + image + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + '}';
     }
 }
