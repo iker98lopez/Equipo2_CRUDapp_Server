@@ -69,7 +69,7 @@ public class CipheringManager {
     public static byte[] decipherText(byte[] text) {
         byte[] decodedMessage = null;
         try {
-            byte fileKey[] = fileReader("C:\\Users\\iker lopez carrillo\\Documents\\NetBeansProjects\\Equipo2_CRUDapp_Server\\src\\java\\equipo2_crudapp_server\\ciphering\\private.key");
+            byte fileKey[] = fileReader("C:\\keys\\private.key");
 
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(fileKey);
