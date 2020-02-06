@@ -22,7 +22,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  * Class to manage the sending of emails to the users of the app.
@@ -33,7 +32,7 @@ public class EmailSender {
 
     private static final Logger LOGGER = Logger.getLogger("pspcifrado.email.Email");
 
-    private static final String sender = "noreply.ofertapps";
+    private String sender;
     private String password;
 
     private String smtp_host = null;
@@ -51,6 +50,7 @@ public class EmailSender {
         this.smtp_host = DEFAULT_SMTP_HOST;
         this.smtp_port = DEFAULT_SMTP_PORT;
 
+        this.sender = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\sender.dat")));
         this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
@@ -66,6 +66,7 @@ public class EmailSender {
         this.smtp_host = (host == null ? DEFAULT_SMTP_HOST : host);
         this.smtp_port = (port == null ? DEFAULT_SMTP_PORT : new Integer(port).intValue());
 
+        this.sender = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\sender.dat")));
         this.password = new String(CipheringManager.decipherText(CipheringManager.fileReader("C:\\keys\\credentials.dat")));
     }
 
@@ -77,6 +78,7 @@ public class EmailSender {
      * @param text Text of the mail.
      */
     private void sendMail(String receiver, String subject, String text) {
+        LOGGER.info(sender);
         try {
             Properties properties = new Properties();
             properties.put("mail.smtp.auth", true);
@@ -136,9 +138,9 @@ public class EmailSender {
      * @param tempPassword Temporary password for the account.
      */
     public void sendRecoveryMail(String receiver, String tempPassword) {
-        String message = "This is the temporal code to access your account. Keep in mind that after closing the application this code will no longer be valid.\n <b>" + tempPassword + "</b>";
+        String message = "Your password has been reset. You can access your account using this temporal password: " + tempPassword;
 
-        sendMail(receiver, "Forgot your password?", message);
+        sendMail(receiver, "Password Reset", message);
     }
 
     /**

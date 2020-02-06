@@ -44,7 +44,7 @@ public class EJBShop implements EJBShopInterface{
 
     /**
      * Deletes an specified shop
-     * @param shopId Id of the shop to delete
+     * @param shop shop to delete
      */
     @Override
     public void deleteShop(Shop shop) {
@@ -68,6 +68,6 @@ public class EJBShop implements EJBShopInterface{
      */
     @Override
     public Set<Shop> findAllShops() {
-        return new HashSet<Shop>(entityManager.createNamedQuery("findAllShops").getResultList());
+        return new HashSet<>(entityManager.createNamedQuery("findAllShops").getResultList());
     }
 }

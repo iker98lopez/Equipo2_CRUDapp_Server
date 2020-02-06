@@ -6,6 +6,7 @@
 package equipo2_crudapp_server.entities;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "shop", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllShops",
-            query = "SELECT a FROM Shop a ORDER BY a.id DESC")
+            query = "SELECT a FROM Shop a ORDER BY a.shopId DESC")
 @XmlRootElement
 public class Shop implements Serializable {
 
@@ -129,12 +130,11 @@ public class Shop implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 13 * hash + Objects.hashCode(this.shopId);
-        hash = 13 * hash + Objects.hashCode(this.name);
-        hash = 13 * hash + Objects.hashCode(this.url);
-        hash = 13 * hash + Objects.hashCode(this.image);
-        hash = 13 * hash + Objects.hashCode(this.offers);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.shopId);
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.url);
+        hash = 71 * hash + Arrays.hashCode(this.image);
         return hash;
     }
 
@@ -159,10 +159,7 @@ public class Shop implements Serializable {
         if (!Objects.equals(this.shopId, other.shopId)) {
             return false;
         }
-        if (!Objects.equals(this.image, other.image)) {
-            return false;
-        }
-        if (!Objects.equals(this.offers, other.offers)) {
+        if (!Arrays.equals(this.image, other.image)) {
             return false;
         }
         return true;
@@ -170,6 +167,6 @@ public class Shop implements Serializable {
 
     @Override
     public String toString() {
-        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + ", image=" + image + ", offers=" + offers + '}';
+        return "Shop{" + "shopId=" + shopId + ", name=" + name + ", url=" + url + ", image=" + image + '}';
     }
 }

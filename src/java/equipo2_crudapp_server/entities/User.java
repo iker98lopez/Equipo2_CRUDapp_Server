@@ -8,6 +8,7 @@ package equipo2_crudapp_server.entities;
 import equipo2_crudapp_classes.enumerators.UserPrivilege;
 import equipo2_crudapp_classes.enumerators.UserStatus;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -310,19 +311,16 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.userId);
-        hash = 17 * hash + Objects.hashCode(this.login);
-        hash = 17 * hash + Objects.hashCode(this.password);
-        hash = 17 * hash + Objects.hashCode(this.fullName);
-        hash = 17 * hash + Objects.hashCode(this.email);
-        hash = 17 * hash + Objects.hashCode(this.lastPasswordChange);
-        hash = 17 * hash + Objects.hashCode(this.lastLogin);
-        hash = 17 * hash + Objects.hashCode(this.privilege);
-        hash = 17 * hash + Objects.hashCode(this.status);
-        hash = 17 * hash + Objects.hashCode(this.image);
-        hash = 17 * hash + Objects.hashCode(this.wishList);
-        hash = 17 * hash + Objects.hashCode(this.comments);
-        hash = 17 * hash + Objects.hashCode(this.offers);
+        hash = 79 * hash + Objects.hashCode(this.userId);
+        hash = 79 * hash + Objects.hashCode(this.login);
+        hash = 79 * hash + Objects.hashCode(this.password);
+        hash = 79 * hash + Objects.hashCode(this.fullName);
+        hash = 79 * hash + Objects.hashCode(this.email);
+        hash = 79 * hash + Objects.hashCode(this.lastPasswordChange);
+        hash = 79 * hash + Objects.hashCode(this.lastLogin);
+        hash = 79 * hash + Objects.hashCode(this.privilege);
+        hash = 79 * hash + Objects.hashCode(this.status);
+        hash = 79 * hash + Arrays.hashCode(this.image);
         return hash;
     }
 
@@ -365,16 +363,7 @@ public class User implements Serializable {
         if (this.status != other.status) {
             return false;
         }
-        if (!Objects.equals(this.image, other.image)) {
-            return false;
-        }
-        if (!Objects.equals(this.wishList, other.wishList)) {
-            return false;
-        }
-        if (!Objects.equals(this.comments, other.comments)) {
-            return false;
-        }
-        if (!Objects.equals(this.offers, other.offers)) {
+        if (!Arrays.equals(this.image, other.image)) {
             return false;
         }
         return true;
@@ -382,6 +371,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", image=" + image + ", wishList=" + wishList + ", comments=" + comments + ", offers=" + offers + '}';
+        return "User{" + "userId=" + userId + ", login=" + login + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", lastPasswordChange=" + lastPasswordChange + ", lastLogin=" + lastLogin + ", privilege=" + privilege + ", status=" + status + ", image=" + image + '}';
     }
 }

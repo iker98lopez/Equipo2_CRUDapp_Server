@@ -56,12 +56,12 @@ public class CommentREST {
     
     /**
      * Method that deletes a comment from the database
-     * @param commentId Id of the comment to delete
+     * @param comment comment to delete
      */
     @DELETE
-    @Path("{id}")
-    public void removeComment(@PathParam("id") Integer commentId) {
-        ejbComment.deleteComment(ejbComment.findComment(commentId));
+    @Path("{comment}")
+    public void removeComment(@PathParam("comment") Comment comment) {
+        ejbComment.deleteComment(comment);
     }
 
     /**

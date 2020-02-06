@@ -73,6 +73,6 @@ public class EJBComment implements EJBCommentInterface {
      */
     @Override
     public Set<Comment> findAllComments() {
-        return new HashSet<Comment>(entityManager.createNamedQuery("findAllComments").getResultList());
+        return new HashSet<>(entityManager.createNamedQuery("findAllComments").getResultList());
     }
 }

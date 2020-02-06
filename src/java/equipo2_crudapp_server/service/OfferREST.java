@@ -54,12 +54,12 @@ public class OfferREST {
     /**
      * Deletes an offer from the database.
      *
-     * @param id ID of the offer to delete.
+     * @param offer offer to delete.
      */
     @DELETE
-    @Path("{id}")
-    public void removeOffer(@PathParam("id") Integer id) {
-        ejbOffer.deleteOffer(ejbOffer.findOffer(id));
+    @Path("{offer}")
+    public void removeOffer(@PathParam("offer") Offer offer) {
+        ejbOffer.deleteOffer(offer);
     }
 
     /**

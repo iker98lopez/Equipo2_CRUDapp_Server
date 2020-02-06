@@ -16,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "offer", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllOffers",
-        query = "SELECT a FROM Offer a ORDER BY a.id DESC")
+        query = "SELECT a FROM Offer a ORDER BY a.offerId DESC")
 @XmlRootElement
 public class Offer implements Serializable {
 
@@ -85,14 +84,12 @@ public class Offer implements Serializable {
     /**
      * Software offered in the offer.
      */
-    //@MapsId("softwareId")
     @ManyToOne(fetch = EAGER)
     private Software software;
 
     /**
      * Shop providing the offer.
      */
-    //@MapsId("shopId")
     @ManyToOne(fetch = EAGER)
     private Shop shop;
 
@@ -245,23 +242,14 @@ public class Offer implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Offer{" + "offerId=" + offerId + ", url=" + url + ", expiringDate=" + expiringDate + ", basePrice=" + basePrice + ", dicountedPrice=" + dicountedPrice + ", discount=" + discount + ", user=" + user + ", software=" + software + ", shop=" + shop + ", comments=" + comments + '}';
-    }
-
-    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.offerId);
-        hash = 67 * hash + Objects.hashCode(this.url);
-        hash = 67 * hash + Objects.hashCode(this.expiringDate);
-        hash = 67 * hash + Objects.hashCode(this.basePrice);
-        hash = 67 * hash + Objects.hashCode(this.dicountedPrice);
-        hash = 67 * hash + Objects.hashCode(this.discount);
-        hash = 67 * hash + Objects.hashCode(this.user);
-        hash = 67 * hash + Objects.hashCode(this.software);
-        hash = 67 * hash + Objects.hashCode(this.shop);
-        hash = 67 * hash + Objects.hashCode(this.comments);
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.offerId);
+        hash = 53 * hash + Objects.hashCode(this.url);
+        hash = 53 * hash + Objects.hashCode(this.expiringDate);
+        hash = 53 * hash + Objects.hashCode(this.basePrice);
+        hash = 53 * hash + Objects.hashCode(this.dicountedPrice);
+        hash = 53 * hash + Objects.hashCode(this.discount);
         return hash;
     }
 
@@ -295,18 +283,11 @@ public class Offer implements Serializable {
         if (!Objects.equals(this.discount, other.discount)) {
             return false;
         }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
-        if (!Objects.equals(this.software, other.software)) {
-            return false;
-        }
-        if (!Objects.equals(this.shop, other.shop)) {
-            return false;
-        }
-        if (!Objects.equals(this.comments, other.comments)) {
-            return false;
-        }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" + "offerId=" + offerId + ", url=" + url + ", expiringDate=" + expiringDate + ", basePrice=" + basePrice + ", dicountedPrice=" + dicountedPrice + ", discount=" + discount + '}';
     }
 }

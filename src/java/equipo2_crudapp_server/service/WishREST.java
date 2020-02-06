@@ -56,12 +56,12 @@ public class WishREST {
     
     /**
      * Method that deletes a wish from the database
-     * @param wishId Id of the wish to delete
+     * @param wish wish to delete
      */
     @DELETE
-    @Path("{id}")
-    public void removeWish(@PathParam("id") Integer wishId) {
-        ejbWish.deleteWish(ejbWish.findWish(wishId));
+    @Path("{wish}")
+    public void removeWish(@PathParam("wish") Wish wish) {
+        ejbWish.deleteWish(wish);
     }
 
     /**

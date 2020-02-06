@@ -81,13 +81,15 @@ public class UserREST {
     /**
      * Method that modifies the password of the specified user
      *
-     * @param password New password for the user
-     * @param user User to change
+     * @param newPassword new password for the user
+     * @param user User to change their password
      */
     @PUT
     @Path("password/{password}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyPassword(@PathParam("password") String newPassword, User user) {
+        user = ejbUser.findUserByLogin(user.getLogin());
+        
         byte[] decipheredPassword = CipheringManager.decipherText(DatatypeConverter.parseHexBinary(newPassword));
         String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
         user.setPassword(hashedPassword);
@@ -99,12 +101,12 @@ public class UserREST {
     /**
      * Method that deletes a user from the database
      *
-     * @param userId Id of the user that is going to be deleted
+     * @param user user to delete
      */
     @DELETE
-    @Path("{id}")
-    public void deleteUser(@PathParam("id") Integer userId) {
-        ejbUser.deleteUser(ejbUser.findUser(userId));
+    @Path("{user}")
+    public void deleteUser(@PathParam("user") User user) {
+        ejbUser.deleteUser(user);
     }
 
     /**
@@ -125,7 +127,7 @@ public class UserREST {
     /**
      * Method that searches for a user
      *
-     * @param userId Id of the user to find
+     * @param login Login of the user to find
      * @return The user found
      */
     @GET
@@ -215,7 +217,16 @@ public class UserREST {
             EmailSender emailSender = new EmailSender();
             emailSender.sendRecoveryMail(email, recoveryCode);
         }
+        
+        
+        String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(recoveryCode.getBytes()));
 
+        User user = ejbUser.findUserByEmail(email);
+        user.setPassword(hashedPassword);
+        user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
+        
+        ejbUser.modifyUser(user);
+        
         return recoveryCode;
     }
 }

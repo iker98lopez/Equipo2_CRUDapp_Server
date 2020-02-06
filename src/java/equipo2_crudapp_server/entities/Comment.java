@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "comment", schema = "equipo2crudappdb")
 @NamedQuery(name = "findAllComments",
-            query = "SELECT a FROM Comment a ORDER BY a.id DESC")
+            query = "SELECT a FROM Comment a ORDER BY a.commentId DESC")
 @XmlRootElement
 public class Comment implements Serializable {
 
@@ -51,7 +50,6 @@ public class Comment implements Serializable {
      * The user that has created the comment
      */
     @NotNull
-    //@MapsId("userId")
     @ManyToOne(fetch=EAGER)
     private User user;
     
@@ -59,7 +57,6 @@ public class Comment implements Serializable {
      * The offer to which the comments belong
      */
     @NotNull
-    //@MapsId("offerId")
     @ManyToOne(fetch=EAGER)
     private Offer offer;
 
@@ -124,11 +121,9 @@ public class Comment implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 11 * hash + Objects.hashCode(this.commentId);
-        hash = 11 * hash + Objects.hashCode(this.comment);
-        hash = 11 * hash + Objects.hashCode(this.user);
-        hash = 11 * hash + Objects.hashCode(this.offer);
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.commentId);
+        hash = 59 * hash + Objects.hashCode(this.comment);
         return hash;
     }
 
@@ -150,14 +145,11 @@ public class Comment implements Serializable {
         if (!Objects.equals(this.commentId, other.commentId)) {
             return false;
         }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
-        if (!Objects.equals(this.offer, other.offer)) {
-            return false;
-        }
         return true;
     }
 
-   
+    @Override
+    public String toString() {
+        return "Comment{" + "commentId=" + commentId + ", comment=" + comment + '}';
+    }
 }

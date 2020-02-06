@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.NotFoundException;
 
 /**
  * Enterprise Java Bean that contains all the logic for the entity User.
@@ -39,7 +40,7 @@ public class EJBUser implements EJBUserInterface {
      * @param user User that is going to be modified with the new values
      */
     @Override
-    public void modifyUser(User user) {
+    public void modifyUser(User user){
         entityManager.merge(user);
     }
 
@@ -70,6 +71,7 @@ public class EJBUser implements EJBUserInterface {
      * @param email Email of the user to find
      * @return The user found
      */
+    @Override
     public User findUserByEmail(String email) {
         return (User) entityManager.createNamedQuery("findUserByEmail").setParameter("email", email).getSingleResult();
     }
@@ -81,7 +83,7 @@ public class EJBUser implements EJBUserInterface {
      */
     @Override
     public Set<User> findAllUsers() {
-        return new HashSet<User>(entityManager.createNamedQuery("findAllUsers").getResultList());
+        return new HashSet<>(entityManager.createNamedQuery("findAllUsers").getResultList());
     }
 
     /**

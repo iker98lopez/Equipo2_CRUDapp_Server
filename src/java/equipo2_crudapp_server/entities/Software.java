@@ -2,6 +2,7 @@ package equipo2_crudapp_server.entities;
 
 import equipo2_crudapp_classes.enumerators.SoftwareType;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -34,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "software", schema = "equipo2crudappdb")
 @NamedQueries({
     @NamedQuery(name = "findAllSoftwares",
-            query = "SELECT a FROM Software a ORDER BY a.id DESC")
+            query = "SELECT a FROM Software a ORDER BY a.softwareId DESC")
     ,
     @NamedQuery(name = "findSoftwaresByName",
             query = "SELECT a FROM Software a WHERE a.name LIKE CONCAT('%', :name, '%')")
@@ -246,7 +247,7 @@ public class Software implements Serializable {
     public void setParentSoftware(Software parentSoftware) {
         this.parentSoftware = parentSoftware;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -254,12 +255,9 @@ public class Software implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.name);
         hash = 59 * hash + Objects.hashCode(this.publisher);
         hash = 59 * hash + Objects.hashCode(this.description);
-        hash = 59 * hash + Objects.hashCode(this.image);
+        hash = 59 * hash + Arrays.hashCode(this.image);
         hash = 59 * hash + Objects.hashCode(this.releaseDate);
         hash = 59 * hash + Objects.hashCode(this.softwareType);
-        hash = 59 * hash + Objects.hashCode(this.offers);
-        hash = 59 * hash + Objects.hashCode(this.wishList);
-        hash = 59 * hash + Objects.hashCode(this.parentSoftware);
         return hash;
     }
 
@@ -287,7 +285,7 @@ public class Software implements Serializable {
         if (!Objects.equals(this.softwareId, other.softwareId)) {
             return false;
         }
-        if (!Objects.equals(this.image, other.image)) {
+        if (!Arrays.equals(this.image, other.image)) {
             return false;
         }
         if (!Objects.equals(this.releaseDate, other.releaseDate)) {
@@ -296,20 +294,11 @@ public class Software implements Serializable {
         if (this.softwareType != other.softwareType) {
             return false;
         }
-        if (!Objects.equals(this.offers, other.offers)) {
-            return false;
-        }
-        if (!Objects.equals(this.wishList, other.wishList)) {
-            return false;
-        }
-        if (!Objects.equals(this.parentSoftware, other.parentSoftware)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", image=" + image + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + ", offers=" + offers + ", wishList=" + wishList + ", parentSoftware=" + parentSoftware + '}';
+        return "Software{" + "softwareId=" + softwareId + ", name=" + name + ", publisher=" + publisher + ", description=" + description + ", image=" + image + ", releaseDate=" + releaseDate + ", softwareType=" + softwareType + '}';
     }
 }

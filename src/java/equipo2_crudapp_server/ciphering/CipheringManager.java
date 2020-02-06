@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.DatagramPacket;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
@@ -81,6 +82,44 @@ public class CipheringManager {
             LOGGER.warning("There was an error trying to decipher the text. " + exception.getClass() + " " + exception.getMessage());
         }
         return decodedMessage;
+    }
+
+    /*
+    
+    /**
+     * This method converts the byte array text received to hexadecimal String.
+     *
+     * @param byteText byte array text to convert.
+     * @return converted text in hexadecimal.
+     */
+    private static String byteToHex(byte[] byteText) {
+        String hexText = "";
+        for (int i = 0; i < byteText.length; i++) {
+            String h = Integer.toHexString(byteText[i] & 0xFF);
+            if (h.length() == 1) {
+                hexText += "0";
+            }
+            hexText += h;
+        }
+        return hexText.toUpperCase();
+    }
+
+    /**
+     * This method converts the hexadecimal string text received to byte array.
+     *
+     * @param hexText hexadecimal text to convert.
+     * @return converted text in byte array.
+     */
+    private static byte[] hexToByte(String hexText) {
+        if (hexText.length() % 2 == 1) {
+            hexText = 0 + hexText;
+        }
+        byte[] byteText = new byte[hexText.length() / 2];
+        for (int i = 0; i < hexText.length(); i += 2) {
+            byteText[i / 2] = (byte) ((Character.digit(hexText.charAt(i), 16) << 4)
+                    + Character.digit(hexText.charAt(i + 1), 16));
+        }
+        return byteText;
     }
 
     /**
