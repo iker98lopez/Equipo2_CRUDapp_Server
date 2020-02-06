@@ -78,7 +78,6 @@ public class EmailSender {
      * @param text Text of the mail.
      */
     private void sendMail(String receiver, String subject, String text) {
-        LOGGER.info(sender);
         try {
             Properties properties = new Properties();
             properties.put("mail.smtp.auth", true);
