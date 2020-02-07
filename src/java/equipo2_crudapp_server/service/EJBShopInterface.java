@@ -48,4 +48,5 @@ public interface EJBShopInterface {
      * @return List of type Shop with all the shops found.
      */
     public Set<Shop> findAllShops();
+
 }
