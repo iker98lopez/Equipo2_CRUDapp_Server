@@ -24,6 +24,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;
 
@@ -94,8 +95,11 @@ public class UserREST {
         String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
         user.setPassword(hashedPassword);
         user.setLastPasswordChange(Date.valueOf(LocalDate.now()));
-
+        
         ejbUser.modifyUser(user);
+        
+        EmailSender emailSender = new EmailSender();
+        emailSender.sendPasswordChangeMail(user.getEmail());
     }
 
     /**
@@ -168,7 +172,6 @@ public class UserREST {
     public User checkUserPassword(@PathParam("login") String login, @PathParam("password") String password) {
         byte[] decipheredPassword = CipheringManager.decipherText(DatatypeConverter.parseHexBinary(password));
         String hashedPassword = DatatypeConverter.printHexBinary(CipheringManager.hashCipher(decipheredPassword));
-        LOGGER.info(login + " "  + hashedPassword + " " + password);
         User user = ejbUser.checkUserPassword(login, hashedPassword);
 
         if (user != null) {
