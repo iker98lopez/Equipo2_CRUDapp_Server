@@ -3,9 +3,12 @@ package equipo2_crudapp_server.service;
 import equipo2_crudapp_server.entities.Offer;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 
 /**
  * Enterprise Java Bean that contains all the logic for the entity Offer.
@@ -17,6 +20,11 @@ public class EJBOffer implements EJBOfferInterface {
 
     @PersistenceContext(unitName = "Equipo2_CRUDapp_ServerPU")
     private EntityManager entityManager;
+    
+    /**
+     * Logger to show error messages and exceptions.
+     */
+    private static final Logger LOGGER = Logger.getLogger("equipo2_crudapp_server.services.EJBOffer");
 
     /**
      * This function creates a new entry in the database with the given offer.
@@ -25,7 +33,12 @@ public class EJBOffer implements EJBOfferInterface {
      */
     @Override
     public void createOffer(Offer offer) {
-        entityManager.persist(offer);
+        try {
+            entityManager.persist(offer);
+        } catch (ConstraintViolationException exception) {
+            LOGGER.warning("Validation failed for the new offer. " + exception.getMessage());
+            throw new EJBException(exception.getMessage());
+        }
     }
 
     /**

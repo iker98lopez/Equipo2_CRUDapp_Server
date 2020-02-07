@@ -77,7 +77,6 @@ public class Offer implements Serializable {
     /**
      * User author of the offer.
      */
-    @NotNull
     @ManyToOne
     private User user;
 

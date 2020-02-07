@@ -2,7 +2,9 @@ package equipo2_crudapp_server.service;
 
 import equipo2_crudapp_server.entities.Offer;
 import java.util.Set;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -22,11 +25,16 @@ import javax.ws.rs.core.MediaType;
 public class OfferREST {
 
     /**
+     * Logger to show error messages and exceptions.
+     */
+    private static final Logger LOGGER = Logger.getLogger("equipo2_crudapp_server.services.OfferREST");
+    
+    /**
      * Enterprise Java Beans for the entity Offer.
      */
     @EJB
     private EJBOfferInterface ejbOffer;
-
+    
     /**
      * Creates a new offer in the database.
      *
@@ -35,7 +43,13 @@ public class OfferREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public void createOffer(Offer offer) {
-        ejbOffer.createOffer(offer);
+        try {
+            ejbOffer.createOffer(offer);
+        } catch (EJBException exception) {
+            LOGGER.warning("There was an error creating a new offer. " + exception.getMessage());
+        } catch (Exception exception) {
+            LOGGER.warning ("There was an unexpected exception. " + exception.getClass() + " " + exception.getMessage());
+        }
     }
 
     /**
