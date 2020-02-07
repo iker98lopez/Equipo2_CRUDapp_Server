@@ -5,6 +5,7 @@
  */
 package equipo2_crudapp_server.service;
 
+import equipo2_crudapp_server.entities.User;
 import equipo2_crudapp_server.entities.Wish;
 import java.util.Set;
 import javax.ejb.EJB;
@@ -31,6 +32,9 @@ public class WishREST {
      */
     @EJB
     private EJBWishInterface ejbWish;
+    @EJB
+    private EJBUserInterface ejbUser;
+    
 
     /**
      * Method that inserts a wish in the database
@@ -51,16 +55,34 @@ public class WishREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public void modifyWish(@PathParam("id") Integer wishId, Wish wish) {
+        /**
+         * Modificacion Adrian Garcia 06/02/2020
+         */
+        wish.setUser(ejbWish.findWish(wishId).getUser());
         ejbWish.modifyWish(wish);
     }
     
+    /**
+     * Modificacion Adrian Garcia 07/02/2020
+     */
     /**
      * Method that deletes a wish from the database
      * @param wish wish to delete
      */
     @DELETE
-    @Path("{wish}")
-    public void removeWish(@PathParam("wish") Wish wish) {
+    @Path("{id}")
+    public void removeWish(@PathParam("id") Integer id) {
+        Wish wish = ejbWish.findWish(id);
+        User user = ejbUser.findUser(wish.getUser().getUserId());
+        
+        Set<Wish> wishes = user.getWishList();
+        wishes.remove(wish);
+        
+        wish.setSoftware(null);
+        wish.setUser(null);
+        user.setWishList(wishes);
+        ejbWish.modifyWish(wish);
+        ejbUser.modifyUser(user);
         ejbWish.deleteWish(wish);
     }
 

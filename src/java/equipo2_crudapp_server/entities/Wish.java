@@ -52,6 +52,25 @@ public class Wish implements Serializable {
     private User user;
 
     /**
+     * The wish minimun price
+     */
+    private Double minPrice;
+    
+    /**
+     * @return the minPrice
+     */
+    public Double getMinPrice() {
+        return minPrice;
+    }
+
+    /**
+     * @param minPrice the minPrice to set
+     */
+    public void setMinPrice(Double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    /**
      * @return the wishId
      */
     public Integer getWishId() {
